@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./css/output.css" />
+		<title>TodoList</title>
+	</head>
+	
+	<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+		<div class="container mx-auto px-4 py-8 max-w-2xl">
+			<!-- Header -->
+			<div class="flex justify-between items-center mb-8">
+				<div>
+					<h1 class="text-4xl font-bold text-gray-800 mb-2">To-Do List</h1>
+					<p class="text-sm text-gray-600">Stay organized and productive</p>
+				</div>
+				<button
+					id="toggle-theme"
+					class="rounded cursor-pointer p-3 bg-gray-800 text-white hover:bg-gray-700">
+					💡
+				</button>
+			</div>
+
+			<!-- Progress Section -->
+			<div class="mb-6 p-4 rounded-lg bg-white shadow-lg fade-in">
+				<div class="flex justify-between items-center mb-2">
+					<span class="text-sm font-medium text-gray-700">Progress</span>
+					<span class="text-sm text-gray-600">0 of 0 completed</span>
+				</div>
+				<div class="w-full bg-gray-200 rounded-full h-2">
+					<div
+						class="progress-bar bg-blue-500 h-2 rounded-full"
+						style="width: 0%"></div>
+				</div>
+			</div>
+
+			<!-- Input Section -->
+			<div class="mb-8 p-6 rounded-xl shadow-lg bg-white">
+				<div class="flex gap-3">
+					<input
+						id="task-input"
+						type="text"
+						placeholder="Add a new task..."
+						class="flex-1 px-4 py-3 rounded-lg border-2 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+					<button
+						id="add-task"
+						class="rounded flex items-center whitespace-nowrap cursor-pointer px-6 py-3 bg-blue-500 text-white hover:bg-blue-600 transition-all font-medium">
+						<span
+							role="img"
+							aria-label="plus"
+							class="anticon anticon-plus mr-2">
+							<svg
+								viewBox="64 64 896 896"
+								focusable="false"
+								data-icon="plus"
+								width="1em"
+								height="1em"
+								fill="currentColor"
+								aria-hidden="true">
+								<path
+									d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"></path>
+								<path
+									d="M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z"></path></svg
+						></span>
+						Add Task
+					</button>
+				</div>
+			</div>
+
+			<!-- Tasks List -->
+			<div id="task-list" class="space-y-3">
+				<div class="text-center py-12 text-gray-500">
+					<div class="mb-4">
+						<i class="fas fa-clipboard-list text-6xl opacity-50"></i>
+					</div>
+					<p class="text-lg font-medium mb-2">No tasks yet</p>
+					<p class="text-sm">Add your first task to get started!</p>
+				</div>
+			</div>
+
+			<!-- Footer Stats -->
+			<div
+				class="mt-8 p-4 rounded-lg text-center bg-white text-gray-600 shadow-lg">
+				<div class="flex justify-center gap-8 text-sm">
+					<span><strong class="text-gray-800">0</strong> Total</span>
+					<span><strong class="text-green-500">0</strong> Completed</span>
+					<span><strong class="text-blue-500">0</strong> Remaining</span>
+				</div>
+			</div>
+		</div>
+
+		<script src="./dist/app.js"></script>
+	</body>
+</html>

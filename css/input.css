@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+
+.task-item {
+	transform: translateY(0);
+	transition: all 0.3s ease;
+}
+
+.task-item:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dark .task-item:hover {
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.fade-in {
+	animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.checkbox-custom {
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #d1d5db;
+	border-radius: 4px;
+	position: relative;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.checkbox-custom:checked {
+	background-color: #3b82f6;
+	border-color: #3b82f6;
+}
+
+.checkbox-custom:checked::after {
+	content: '✓';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.dark .checkbox-custom {
+	border-color: #6b7280;
+}
+
+.dark .checkbox-custom:checked {
+	background-color: #3b82f6;
+	border-color: #3b82f6;
+}
+
+.progress-bar {
+	transition: width 0.5s ease;
+}

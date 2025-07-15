@@ -1,0 +1,20 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:css": "npx @tailwindcss/cli -i ./css/input.css -o ./css/output.css --watch --minify",
+    "dev:tsc": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "sweetalert2": "^11.22.2",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.8.3"
+  }
+}

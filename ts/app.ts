@@ -2,6 +2,7 @@ const taskInput = document.querySelector('#task-input') as HTMLInputElement
 const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
 const progressBar = document.querySelector('#progress-bar') as HTMLDivElement
 const tasksContainer = document.querySelector('#task-list') as HTMLDivElement
+const footer = document.querySelector('#footer') as HTMLDivElement
 const noTaskMessage = document.querySelector(
 	'#noTask-message'
 ) as HTMLDivElement
@@ -43,9 +44,7 @@ const addTaskHandler = () => {
 		todos.push(newTodo)
 		localStorage.setItem('todos', JSON.stringify(todos))
 
-		tasksContainer.classList.add('fade-in')
-		tasksContainer.classList.remove('hidden')
-		noTaskMessage.classList.add('hidden')
+		showAnimation()
 
 		todoGenerator(newTodo)
 
@@ -55,9 +54,7 @@ const addTaskHandler = () => {
 
 const showTodos = () => {
 	if (todos.length > 0) {
-		tasksContainer.classList.add('fade-in')
-		tasksContainer.classList.remove('hidden')
-		noTaskMessage.classList.add('hidden')
+		showAnimation()
 
 		todos.forEach((todo) => {
 			todoGenerator(todo)
@@ -87,6 +84,16 @@ const todoGenerator = (todo: Task) => {
 				</div>
 			</div>`
 	)
+}
+
+const showAnimation = () => {
+	tasksContainer.classList.add('fade-in')
+	tasksContainer.classList.remove('hidden')
+
+	noTaskMessage.classList.add('hidden')
+
+	footer.classList.add('fade-in')
+	footer.classList.remove('hidden')
 }
 
 addTaskBtn?.addEventListener('click', () => {

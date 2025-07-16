@@ -3,6 +3,7 @@ const taskInput = document.querySelector('#task-input');
 const addTaskBtn = document.querySelector('#add-task');
 const progressBar = document.querySelector('#progress-bar');
 const tasksContainer = document.querySelector('#task-list');
+const footer = document.querySelector('#footer');
 const noTaskMessage = document.querySelector('#noTask-message');
 const notyf = new Notyf({
     position: {
@@ -27,18 +28,14 @@ const addTaskHandler = () => {
         };
         todos.push(newTodo);
         localStorage.setItem('todos', JSON.stringify(todos));
-        tasksContainer.classList.add('fade-in');
-        tasksContainer.classList.remove('hidden');
-        noTaskMessage.classList.add('hidden');
+        showAnimation();
         todoGenerator(newTodo);
         taskInput.value = '';
     }
 };
 const showTodos = () => {
     if (todos.length > 0) {
-        tasksContainer.classList.add('fade-in');
-        tasksContainer.classList.remove('hidden');
-        noTaskMessage.classList.add('hidden');
+        showAnimation();
         todos.forEach((todo) => {
             todoGenerator(todo);
         });
@@ -63,6 +60,13 @@ const todoGenerator = (todo) => {
 					</div>
 				</div>
 			</div>`);
+};
+const showAnimation = () => {
+    tasksContainer.classList.add('fade-in');
+    tasksContainer.classList.remove('hidden');
+    noTaskMessage.classList.add('hidden');
+    footer.classList.add('fade-in');
+    footer.classList.remove('hidden');
 };
 addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', () => {
     addTaskHandler();

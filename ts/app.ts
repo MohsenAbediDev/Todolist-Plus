@@ -12,6 +12,7 @@ interface Task {
 	title: string
 	isCompleted: boolean
 }
+declare var Notyf: any
 
 const notyf = new Notyf({
 	position: {
@@ -69,11 +70,18 @@ const todoGenerator = (todo: Task) => {
 			<div
 				class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white">
 				<div class="flex items-center gap-3">
-						<input type="checkbox" id="task-${todo.id}" name="task-${todo.id}" class="checkbox-custom cursor-pointer" />
+						<input type="checkbox" 
+							name="task-${todo.id}" 
+							onchange="completeTask(event, ${todo.id})" 
+							class="checkbox-custom cursor-pointer" 
+							${todo.isCompleted ? 'checked' : ''} />
 
-						<label for="task-${todo.id}" class="flex-1 cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500">
+						<span 
+							class="flex-1 ${
+								todo.isCompleted ? 'line-through opacity-50' : ''
+							} cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500">
 							${todo.title}
-						</label>
+						</span>
 
 					<div class="flex items-center gap-2 transition-opacity duration-200">
 						<button 
@@ -92,8 +100,6 @@ const showAnimation = () => {
 	tasksContainer.classList.remove('hidden')
 
 	noTaskMessage.classList.add('hidden')
-
-	console.log(todos.length)
 
 	if (todos.length > 0) {
 		footer.classList.add('fade-in')
@@ -121,6 +127,27 @@ const showAnimation = () => {
 	showTodos()
 
 	notyf.success('Task has been deleted !')
+}
+;(window as any).completeTask = function (e: Event, id: number) {
+	const checkbox = e.target as HTMLInputElement
+	const isTaskCompleted = checkbox.checked
+
+	const updatedTodos: Task[] = todos.map((task) => {
+		if (task.id === id) {
+			return { ...task, isCompleted: isTaskCompleted }
+		}
+		return task
+	})
+
+	todos.length = 0
+	todos.push(...updatedTodos)
+	localStorage.setItem('todos', JSON.stringify(todos))
+
+	const taskItems = tasksContainer.querySelectorAll('.task-item')
+	taskItems.forEach((item) => item.remove())
+
+	showAnimation()
+	showTodos()
 }
 
 addTaskBtn?.addEventListener('click', () => {

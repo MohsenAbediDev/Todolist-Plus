@@ -24,6 +24,7 @@
 	height: 20px;
 	border: 2px solid #d1d5db;
 	border-radius: 4px;
+	outline: none;
 	position: relative;
 	cursor: pointer;
 	transition: all 0.3s ease;

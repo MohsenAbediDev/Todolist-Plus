@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:css": "npx @tailwindcss/cli -i ./css/input.css -o ./css/output.css --watch --minify",
-    "dev:tsc": "tsc --watch"
+    "dev:tsc": "npx tsc --watch"
   },
   "keywords": [],
   "author": "",

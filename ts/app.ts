@@ -1,3 +1,6 @@
-const taskInput = document.querySelector('#task-input')
+const taskInput = document.querySelector('#task-input') as HTMLInputElement
+const addTask = document.querySelector('#add-task') as HTMLButtonElement
 
-console.log(taskInput);
+addTask?.addEventListener('click', () => {
+	taskInput.value = ''
+})

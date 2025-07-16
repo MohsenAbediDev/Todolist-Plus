@@ -13,7 +13,6 @@
   "type": "commonjs",
   "dependencies": {
     "@tailwindcss/cli": "^4.1.11",
-    "sweetalert2": "^11.22.2",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3"
   }

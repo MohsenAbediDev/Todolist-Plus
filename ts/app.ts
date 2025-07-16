@@ -12,11 +12,27 @@ interface Task {
 	isCompleted: boolean
 }
 
+const notyf = new Notyf({
+	position: {
+		x: 'right',
+		y: 'top',
+	},
+})
+
 const storedTodos = localStorage.getItem('todos')
 const todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
 
 const addTaskHandler = () => {
 	const value = taskInput.value.trim()
+	const isDuplicate = todos.some(
+		(todo) => todo.title.trim().toLowerCase() === value.toLowerCase()
+	)
+
+	if (isDuplicate) {
+		notyf.error('This task exists !')
+
+		return
+	}
 
 	if (value) {
 		const newTodo = {

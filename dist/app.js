@@ -4,10 +4,21 @@ const addTaskBtn = document.querySelector('#add-task');
 const progressBar = document.querySelector('#progress-bar');
 const tasksContainer = document.querySelector('#task-list');
 const noTaskMessage = document.querySelector('#noTask-message');
+const notyf = new Notyf({
+    position: {
+        x: 'right',
+        y: 'top',
+    },
+});
 const storedTodos = localStorage.getItem('todos');
 const todos = storedTodos ? JSON.parse(storedTodos) : [];
 const addTaskHandler = () => {
     const value = taskInput.value.trim();
+    const isDuplicate = todos.some((todo) => todo.title.trim().toLowerCase() === value.toLowerCase());
+    if (isDuplicate) {
+        notyf.error('This task exists !');
+        return;
+    }
     if (value) {
         const newTodo = {
             id: todos.length + 1,

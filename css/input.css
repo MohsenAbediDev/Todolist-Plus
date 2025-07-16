@@ -18,17 +18,6 @@
 	animation: fadeIn 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
 .checkbox-custom {
 	appearance: none;
 	width: 20px;
@@ -67,4 +56,16 @@
 
 .progress-bar {
 	transition: width 0.5s ease;
+}
+
+/* Animation's */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }

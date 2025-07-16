@@ -5,6 +5,9 @@ const progressBar = document.querySelector('#progress-bar');
 const tasksContainer = document.querySelector('#task-list');
 const footer = document.querySelector('#footer');
 const noTaskMessage = document.querySelector('#noTask-message');
+const statTotal = document.querySelector('#stat-total');
+const statCompleted = document.querySelector('#stat-completed');
+const statRemaining = document.querySelector('#stat-remaining');
 const notyf = new Notyf({
     position: {
         x: 'right',
@@ -29,6 +32,7 @@ const addTaskHandler = () => {
         todos.push(newTodo);
         localStorage.setItem('todos', JSON.stringify(todos));
         showAnimation();
+        updateFooterStat();
         todoGenerator(newTodo);
         taskInput.value = '';
     }
@@ -36,6 +40,7 @@ const addTaskHandler = () => {
 const showTodos = () => {
     if (todos.length > 0) {
         showAnimation();
+        updateFooterStat();
         todos.forEach((todo) => {
             todoGenerator(todo);
         });
@@ -80,6 +85,13 @@ const showAnimation = () => {
         footer.classList.remove('fade-in');
         noTaskMessage.classList.remove('hidden');
     }
+};
+const updateFooterStat = () => {
+    const isCompletedCount = todos.filter((todo) => todo.isCompleted === true);
+    const remainingCount = todos.filter((todo) => todo.isCompleted === false);
+    statTotal.innerHTML = todos.length.toString();
+    statCompleted.innerHTML = isCompletedCount.length.toString() || '0';
+    statRemaining.innerHTML = remainingCount.length.toString() || '0';
 };
 window.removeTask = function (id) {
     const filteredTodos = todos.filter((task) => task.id !== id);

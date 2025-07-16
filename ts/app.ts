@@ -6,6 +6,9 @@ const footer = document.querySelector('#footer') as HTMLDivElement
 const noTaskMessage = document.querySelector(
 	'#noTask-message'
 ) as HTMLDivElement
+const statTotal = document.querySelector('#stat-total') as HTMLElement
+const statCompleted = document.querySelector('#stat-completed') as HTMLElement
+const statRemaining = document.querySelector('#stat-remaining') as HTMLElement
 
 interface Task {
 	id: number
@@ -46,6 +49,7 @@ const addTaskHandler = () => {
 		localStorage.setItem('todos', JSON.stringify(todos))
 
 		showAnimation()
+		updateFooterStat()
 
 		todoGenerator(newTodo)
 
@@ -56,6 +60,7 @@ const addTaskHandler = () => {
 const showTodos = () => {
 	if (todos.length > 0) {
 		showAnimation()
+		updateFooterStat()
 
 		todos.forEach((todo) => {
 			todoGenerator(todo)
@@ -112,6 +117,16 @@ const showAnimation = () => {
 	}
 }
 
+const updateFooterStat = () => {
+	const isCompletedCount = todos.filter((todo) => todo.isCompleted === true)
+	const remainingCount = todos.filter((todo) => todo.isCompleted === false)
+	
+	statTotal.innerHTML = todos.length.toString()
+	statCompleted.innerHTML = isCompletedCount.length.toString() || '0'
+	statRemaining.innerHTML = remainingCount.length.toString() || '0'
+}
+
+// Remove Task Handler
 ;(window as any).removeTask = function (id: number) {
 	const filteredTodos: Task[] = todos.filter((task) => task.id !== id)
 
@@ -128,6 +143,8 @@ const showAnimation = () => {
 
 	notyf.success('Task has been deleted !')
 }
+
+// Complete Task Handler
 ;(window as any).completeTask = function (e: Event, id: number) {
 	const checkbox = e.target as HTMLInputElement
 	const isTaskCompleted = checkbox.checked

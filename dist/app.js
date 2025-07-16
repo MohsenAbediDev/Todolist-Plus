@@ -38,22 +38,16 @@ const todoGenerator = (todo) => {
 			<div
 				class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white">
 				<div class="flex items-center gap-3">
-						<input type="checkbox" name="task-${todo.id}" class="checkbox-custom cursor-pointer" />
+						<input type="checkbox" id="task-${todo.id}" name="task-${todo.id}" class="checkbox-custom cursor-pointer" />
 
-						<span
-							class="flex-1 cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500">
+						<label for="task-${todo.id}" class="flex-1 cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500">
 							${todo.title}
-						</span>
+						</label>
 
 					<div class="flex items-center gap-2 transition-opacity duration-200">
 						<button
-							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 hover:bg-green-600 transition-colors duration-200">
-							<i class="fas fa-check text-white"></i>
-						</button>
-
-						<button
-							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-gray-500 text-white hover:bg-gray-600 transition-colors duration-200">
-							<i class="fas fa-xmark text-white"></i>
+							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-red-400 text-white hover:bg-red-500 transition-colors duration-200">
+							<i class="fas fa-trash text-white"></i>
 						</button>
 					</div>
 				</div>

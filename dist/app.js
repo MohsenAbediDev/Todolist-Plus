@@ -53,7 +53,8 @@ const todoGenerator = (todo) => {
 						</label>
 
 					<div class="flex items-center gap-2 transition-opacity duration-200">
-						<button
+						<button 
+							onclick="removeTask(${todo.id})"
 							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-red-400 text-white hover:bg-red-500 transition-colors duration-200">
 							<i class="fas fa-trash text-white"></i>
 						</button>
@@ -65,8 +66,27 @@ const showAnimation = () => {
     tasksContainer.classList.add('fade-in');
     tasksContainer.classList.remove('hidden');
     noTaskMessage.classList.add('hidden');
-    footer.classList.add('fade-in');
-    footer.classList.remove('hidden');
+    console.log(todos.length);
+    if (todos.length > 0) {
+        footer.classList.add('fade-in');
+        footer.classList.remove('hidden');
+    }
+    else {
+        footer.classList.add('hidden');
+        footer.classList.remove('fade-in');
+        noTaskMessage.classList.remove('hidden');
+    }
+};
+window.removeTask = function (id) {
+    const filteredTodos = todos.filter((task) => task.id !== id);
+    todos.length = 0;
+    todos.push(...filteredTodos);
+    localStorage.setItem('todos', JSON.stringify(todos));
+    const taskItems = tasksContainer.querySelectorAll('.task-item');
+    taskItems.forEach((item) => item.remove());
+    showAnimation();
+    showTodos();
+    notyf.success('Task has been deleted !');
 };
 addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', () => {
     addTaskHandler();

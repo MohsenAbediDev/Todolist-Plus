@@ -19,15 +19,30 @@ const addTaskHandler = () => {
         tasksContainer.classList.add('fade-in');
         tasksContainer.classList.remove('hidden');
         noTaskMessage.classList.add('hidden');
-        tasksContainer.insertAdjacentHTML('beforeend', `
+        todoGenerator(newTodo);
+        taskInput.value = '';
+    }
+};
+const showTodos = () => {
+    if (todos.length > 0) {
+        tasksContainer.classList.add('fade-in');
+        tasksContainer.classList.remove('hidden');
+        noTaskMessage.classList.add('hidden');
+        todos.forEach((todo) => {
+            todoGenerator(todo);
+        });
+    }
+};
+const todoGenerator = (todo) => {
+    tasksContainer.insertAdjacentHTML('beforeend', `
 			<div
 				class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white">
 				<div class="flex items-center gap-3">
-						<input type="checkbox" name="task-${newTodo.id}" class="checkbox-custom cursor-pointer" />
+						<input type="checkbox" name="task-${todo.id}" class="checkbox-custom cursor-pointer" />
 
 						<span
 							class="flex-1 cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500">
-							${newTodo.title}
+							${todo.title}
 						</span>
 
 					<div class="flex items-center gap-2 transition-opacity duration-200">
@@ -43,10 +58,9 @@ const addTaskHandler = () => {
 					</div>
 				</div>
 			</div>`);
-        taskInput.value = '';
-    }
 };
 addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', () => {
     addTaskHandler();
 });
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');
+window.addEventListener('load', showTodos);

@@ -2,7 +2,6 @@ const taskInput = document.querySelector('#task-input') as HTMLInputElement
 const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
 const progressBar = document.querySelector('#progress-bar') as HTMLDivElement
 const tasksContainer = document.querySelector('#task-list') as HTMLDivElement
-
 const noTaskMessage = document.querySelector(
 	'#noTask-message'
 ) as HTMLDivElement
@@ -13,29 +12,23 @@ interface Task {
 	isCompleted: boolean
 }
 
-const tasksList: Task[] = []
-
-addTaskBtn?.addEventListener('click', () => {
-	addTaskHandler()
-})
-taskInput?.addEventListener('keydown', (e) =>
-	e.key === 'Enter' ? addTaskHandler() : ''
-)
+const storedTodos = localStorage.getItem('todos')
+const todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
 
 const addTaskHandler = () => {
 	const value = taskInput.value.trim()
 
 	if (value) {
 		const newTodo = {
-			id: tasksList.length + 1,
+			id: todos.length + 1,
 			title: value,
 			isCompleted: false,
 		}
-		tasksList.push(newTodo)
+		todos.push(newTodo)
+		localStorage.setItem('todos', JSON.stringify(todos))
 
 		tasksContainer.classList.add('fade-in')
 		tasksContainer.classList.remove('hidden')
-
 		noTaskMessage.classList.add('hidden')
 
 		tasksContainer.insertAdjacentHTML(
@@ -65,9 +58,14 @@ const addTaskHandler = () => {
 				</div>
 			</div>`
 		)
+
+		taskInput.value = ''
 	}
-
-	console.log(tasksList)
-
-	taskInput.value = ''
 }
+
+addTaskBtn?.addEventListener('click', () => {
+	addTaskHandler()
+})
+taskInput?.addEventListener('keydown', (e) =>
+	e.key === 'Enter' ? addTaskHandler() : ''
+)

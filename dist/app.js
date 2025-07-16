@@ -4,20 +4,18 @@ const addTaskBtn = document.querySelector('#add-task');
 const progressBar = document.querySelector('#progress-bar');
 const tasksContainer = document.querySelector('#task-list');
 const noTaskMessage = document.querySelector('#noTask-message');
-const tasksList = [];
-addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', () => {
-    addTaskHandler();
-});
-taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');
+const storedTodos = localStorage.getItem('todos');
+const todos = storedTodos ? JSON.parse(storedTodos) : [];
 const addTaskHandler = () => {
     const value = taskInput.value.trim();
     if (value) {
         const newTodo = {
-            id: tasksList.length + 1,
+            id: todos.length + 1,
             title: value,
             isCompleted: false,
         };
-        tasksList.push(newTodo);
+        todos.push(newTodo);
+        localStorage.setItem('todos', JSON.stringify(todos));
         tasksContainer.classList.add('fade-in');
         tasksContainer.classList.remove('hidden');
         noTaskMessage.classList.add('hidden');
@@ -45,7 +43,10 @@ const addTaskHandler = () => {
 					</div>
 				</div>
 			</div>`);
+        taskInput.value = '';
     }
-    console.log(tasksList);
-    taskInput.value = '';
 };
+addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', () => {
+    addTaskHandler();
+});
+taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');

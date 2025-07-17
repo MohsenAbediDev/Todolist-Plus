@@ -63,35 +63,66 @@
 			</div>
 
 			<!-- Input Section -->
-			<div class="mb-6 p-6 rounded-xl shadow-lg bg-white">
-				<div class="flex gap-3">
+			<div
+				id="input-container"
+				class="mb-6 p-6 h-[100px] rounded-xl shadow-lg bg-white transition-all duration-500 ease-in-out overflow-hidden">
+				<div class="flex flex-col gap-3">
+					<!-- Title Input -->
 					<input
 						id="task-input"
 						type="text"
 						placeholder="Add a new task..."
 						class="flex-1 px-4 py-3 rounded-lg border-2 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-					<button
-						id="add-task"
-						class="rounded flex items-center whitespace-nowrap cursor-pointer px-6 py-3 bg-blue-500 text-white hover:bg-blue-600 transition-all font-medium">
-						<span
-							role="img"
-							aria-label="plus"
-							class="anticon anticon-plus mr-2">
-							<svg
-								viewBox="64 64 896 896"
-								focusable="false"
-								data-icon="plus"
-								width="1em"
-								height="1em"
-								fill="currentColor"
-								aria-hidden="true">
-								<path
-									d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"></path>
-								<path
-									d="M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z"></path></svg
-						></span>
-						Add Task
-					</button>
+
+					<!-- Description Input -->
+					<textarea
+						id="description-input"
+						placeholder="Add a description (optional)..."
+						class="w-full hidden px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500"
+						rows="3"
+						maxlength="500"></textarea>
+
+					<div class="flex gap-3 hidden" id="select-container">
+						<select
+							class="flex-1 px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 border-gray-200 text-gray-800">
+							<option value="Personal">Personal</option>
+							<option value="Work">Work</option>
+							<option value="Shopping">Shopping</option>
+							<option value="Health">Health</option>
+							<option value="Education">Education</option>
+						</select>
+
+						<!-- Add Task Button -->
+						<button
+							id="add-task"
+							class="rounded flex items-center gap-2 whitespace-nowrap cursor-pointer px-6 py-3 bg-blue-500 text-white hover:bg-blue-600 transition-all font-medium">
+							<i class="fas fa-plus"></i>
+							Add Task
+						</button>
+					</div>
+
+					<!-- Select Difficulty Level -->
+					<div class="flex items-center gap-2 hidden" id="difficulty-container">
+						<span class="text-sm text-gray-600">Difficulty:</span>
+						<div class="flex gap-1">
+							<button
+								class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
+								<i class="fas fa-star"></i></button
+							><button
+								class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
+								<i class="fas fa-star"></i></button
+							><button
+								class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
+								<i class="fas fa-star"></i></button
+							><button
+								class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
+								<i class="fas fa-star"></i></button
+							><button
+								class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
+								<i class="fas fa-star"></i>
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 

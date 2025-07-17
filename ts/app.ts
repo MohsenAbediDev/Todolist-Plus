@@ -1,4 +1,19 @@
 const taskInput = document.querySelector('#task-input') as HTMLInputElement
+const inputContainer = document.querySelector(
+	'#input-container'
+) as HTMLDivElement
+
+const descriptionInput = document.querySelector(
+	'#description-input'
+) as HTMLTextAreaElement
+
+const selectContainer = document.querySelector(
+	'#select-container'
+) as HTMLDivElement
+
+const difficultyContainer = document.querySelector(
+	'#difficulty-container'
+) as HTMLDivElement
 const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
 const progressBar = document.querySelector('#progress-bar') as HTMLDivElement
 const tasksContainer = document.querySelector('#task-list') as HTMLDivElement
@@ -52,6 +67,8 @@ const addTaskHandler = () => {
 		updateFooterStat()
 
 		todoGenerator(newTodo)
+
+		closeInputBox()
 
 		taskInput.value = ''
 	}
@@ -120,10 +137,39 @@ const showAnimation = () => {
 const updateFooterStat = () => {
 	const isCompletedCount = todos.filter((todo) => todo.isCompleted === true)
 	const remainingCount = todos.filter((todo) => todo.isCompleted === false)
-	
+
 	statTotal.innerHTML = todos.length.toString()
 	statCompleted.innerHTML = isCompletedCount.length.toString() || '0'
 	statRemaining.innerHTML = remainingCount.length.toString() || '0'
+}
+
+// Open input box
+taskInput.addEventListener('focus', () => {
+	inputContainer.classList.remove('h-[100px]')
+	inputContainer.classList.add('h-[332px]')
+
+	descriptionInput.classList.remove('hidden')
+	descriptionInput.classList.add('show')
+
+	selectContainer.classList.remove('hidden')
+	selectContainer.classList.add('show')
+
+	difficultyContainer.classList.remove('hidden')
+	difficultyContainer.classList.add('show')
+})
+
+const closeInputBox = () => {
+	inputContainer.classList.remove('h-[332px]')
+	inputContainer.classList.add('h-[100px]')
+
+	descriptionInput.classList.remove('show')
+	descriptionInput.classList.add('hidden')
+
+	selectContainer.classList.remove('show')
+	selectContainer.classList.add('hidden')
+
+	difficultyContainer.classList.remove('show')
+	difficultyContainer.classList.add('hidden')
 }
 
 // Remove Task Handler

@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+::-webkit-scrollbar {
+	display: none;
+}
+
 .task-item {
 	transform: translateY(0);
 	transition: all 0.3s ease;
@@ -16,6 +20,9 @@
 
 .fade-in {
 	animation: fadeIn 0.5s ease-in-out;
+}
+.show {
+	animation: showAnimation 0.5s ease-in-out;
 }
 
 .checkbox-custom {
@@ -68,5 +75,13 @@
 	to {
 		opacity: 1;
 		transform: translateY(0);
+	}
+}
+@keyframes showAnimation {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
 	}
 }

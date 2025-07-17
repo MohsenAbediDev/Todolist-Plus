@@ -1,5 +1,9 @@
 "use strict";
 const taskInput = document.querySelector('#task-input');
+const inputContainer = document.querySelector('#input-container');
+const descriptionInput = document.querySelector('#description-input');
+const selectContainer = document.querySelector('#select-container');
+const difficultyContainer = document.querySelector('#difficulty-container');
 const addTaskBtn = document.querySelector('#add-task');
 const progressBar = document.querySelector('#progress-bar');
 const tasksContainer = document.querySelector('#task-list');
@@ -34,6 +38,7 @@ const addTaskHandler = () => {
         showAnimation();
         updateFooterStat();
         todoGenerator(newTodo);
+        closeInputBox();
         taskInput.value = '';
     }
 };
@@ -92,6 +97,27 @@ const updateFooterStat = () => {
     statTotal.innerHTML = todos.length.toString();
     statCompleted.innerHTML = isCompletedCount.length.toString() || '0';
     statRemaining.innerHTML = remainingCount.length.toString() || '0';
+};
+// Open input box
+taskInput.addEventListener('focus', () => {
+    inputContainer.classList.remove('h-[100px]');
+    inputContainer.classList.add('h-[332px]');
+    descriptionInput.classList.remove('hidden');
+    descriptionInput.classList.add('show');
+    selectContainer.classList.remove('hidden');
+    selectContainer.classList.add('show');
+    difficultyContainer.classList.remove('hidden');
+    difficultyContainer.classList.add('show');
+});
+const closeInputBox = () => {
+    inputContainer.classList.remove('h-[332px]');
+    inputContainer.classList.add('h-[100px]');
+    descriptionInput.classList.remove('show');
+    descriptionInput.classList.add('hidden');
+    selectContainer.classList.remove('show');
+    selectContainer.classList.add('hidden');
+    difficultyContainer.classList.remove('show');
+    difficultyContainer.classList.add('hidden');
 };
 window.removeTask = function (id) {
     const filteredTodos = todos.filter((task) => task.id !== id);

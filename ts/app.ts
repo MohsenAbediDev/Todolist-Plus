@@ -1,29 +1,22 @@
 const taskInput = document.querySelector('#task-input') as HTMLInputElement
-const inputContainer = document.querySelector(
-	'#input-container'
-) as HTMLDivElement
-
-const descriptionInput = document.querySelector(
-	'#description-input'
-) as HTMLTextAreaElement
-
-const selectContainer = document.querySelector(
-	'#select-container'
-) as HTMLDivElement
-
-const difficultyContainer = document.querySelector(
-	'#difficulty-container'
-) as HTMLDivElement
 const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
 const progressBar = document.querySelector('#progress-bar') as HTMLDivElement
 const tasksContainer = document.querySelector('#task-list') as HTMLDivElement
 const footer = document.querySelector('#footer') as HTMLDivElement
-const noTaskMessage = document.querySelector(
-	'#noTask-message'
-) as HTMLDivElement
 const statTotal = document.querySelector('#stat-total') as HTMLElement
 const statCompleted = document.querySelector('#stat-completed') as HTMLElement
 const statRemaining = document.querySelector('#stat-remaining') as HTMLElement
+const closeBoxBtn = document.querySelector('#close-box') as HTMLButtonElement
+// prettier-ignore
+const inputContainer = document.querySelector('#input-container') as HTMLDivElement
+// prettier-ignore
+const descriptionInput = document.querySelector('#description-input') as HTMLTextAreaElement
+// prettier-ignore
+const selectContainer = document.querySelector('#select-container') as HTMLDivElement
+// prettier-ignore
+const difficultyContainer = document.querySelector('#difficulty-container') as HTMLDivElement
+// prettier-ignore
+const noTaskMessage = document.querySelector('#noTask-message') as HTMLDivElement
 
 interface Task {
 	id: number
@@ -71,6 +64,7 @@ const addTaskHandler = () => {
 		closeInputBox()
 
 		taskInput.value = ''
+		descriptionInput.value = ''
 	}
 }
 
@@ -213,9 +207,11 @@ const closeInputBox = () => {
 	showTodos()
 }
 
-addTaskBtn?.addEventListener('click', () => {
-	addTaskHandler()
-})
+// Event's
+addTaskBtn?.addEventListener('click', addTaskHandler)
+
+closeBoxBtn?.addEventListener('click', closeInputBox)
+
 taskInput?.addEventListener('keydown', (e) =>
 	e.key === 'Enter' ? addTaskHandler() : ''
 )

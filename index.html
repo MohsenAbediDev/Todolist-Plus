@@ -102,26 +102,37 @@
 					</div>
 
 					<!-- Select Difficulty Level -->
-					<div class="flex items-center gap-2 hidden" id="difficulty-container">
-						<span class="text-sm text-gray-600">Difficulty:</span>
-						<div class="flex gap-1">
-							<button
-								class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
-								<i class="fas fa-star"></i></button
-							><button
-								class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
-								<i class="fas fa-star"></i></button
-							><button
-								class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
-								<i class="fas fa-star"></i></button
-							><button
-								class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
-								<i class="fas fa-star"></i></button
-							><button
-								class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
-								<i class="fas fa-star"></i>
-							</button>
+					<div
+						class="flex items-center justify-between hidden"
+						id="difficulty-container">
+						<div class="flex items-center gap-2">
+							<span class="text-sm text-gray-600">Difficulty:</span>
+							<div class="flex gap-1">
+								<button
+									class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
+									<i class="fas fa-star"></i></button
+								><button
+									class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
+									<i class="fas fa-star"></i></button
+								><button
+									class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
+									<i class="fas fa-star"></i></button
+								><button
+									class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
+									<i class="fas fa-star"></i></button
+								><button
+									class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
+									<i class="fas fa-star"></i>
+								</button>
+							</div>
 						</div>
+
+						<!-- Close Button -->
+						<button
+							id="close-box"
+							class="rounded flex items-center gap-2 whitespace-nowrap cursor-pointer p-2 bg-gray-500 text-white hover:bg-gray-600 transition-all font-medium">
+							<i class="fas fa-xmark"></i>
+						</button>
 					</div>
 				</div>
 			</div>

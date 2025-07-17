@@ -1,17 +1,23 @@
 "use strict";
 const taskInput = document.querySelector('#task-input');
-const inputContainer = document.querySelector('#input-container');
-const descriptionInput = document.querySelector('#description-input');
-const selectContainer = document.querySelector('#select-container');
-const difficultyContainer = document.querySelector('#difficulty-container');
 const addTaskBtn = document.querySelector('#add-task');
 const progressBar = document.querySelector('#progress-bar');
 const tasksContainer = document.querySelector('#task-list');
 const footer = document.querySelector('#footer');
-const noTaskMessage = document.querySelector('#noTask-message');
 const statTotal = document.querySelector('#stat-total');
 const statCompleted = document.querySelector('#stat-completed');
 const statRemaining = document.querySelector('#stat-remaining');
+const closeBoxBtn = document.querySelector('#close-box');
+// prettier-ignore
+const inputContainer = document.querySelector('#input-container');
+// prettier-ignore
+const descriptionInput = document.querySelector('#description-input');
+// prettier-ignore
+const selectContainer = document.querySelector('#select-container');
+// prettier-ignore
+const difficultyContainer = document.querySelector('#difficulty-container');
+// prettier-ignore
+const noTaskMessage = document.querySelector('#noTask-message');
 const notyf = new Notyf({
     position: {
         x: 'right',
@@ -40,6 +46,7 @@ const addTaskHandler = () => {
         todoGenerator(newTodo);
         closeInputBox();
         taskInput.value = '';
+        descriptionInput.value = '';
     }
 };
 const showTodos = () => {
@@ -147,8 +154,8 @@ window.completeTask = function (e, id) {
     showAnimation();
     showTodos();
 };
-addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', () => {
-    addTaskHandler();
-});
+// Event's
+addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', addTaskHandler);
+closeBoxBtn === null || closeBoxBtn === void 0 ? void 0 : closeBoxBtn.addEventListener('click', closeInputBox);
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');
 window.addEventListener('load', showTodos);

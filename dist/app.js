@@ -10,9 +10,15 @@ const statRemaining = document.querySelector('#stat-remaining');
 const closeBoxBtn = document.querySelector('#close-box');
 const exportBtn = document.querySelector('#export-btn');
 // prettier-ignore
+const taskCharCount = document.querySelector('#task-char-count');
+// prettier-ignore
+const descriptionCharCount = document.querySelector('#description-char-count');
+// prettier-ignore
 const exportDropdown = document.querySelector('#exportDropdown');
 // prettier-ignore
 const inputContainer = document.querySelector('#input-container');
+// prettier-ignore
+const descriptionContainer = document.querySelector('#description-container');
 // prettier-ignore
 const descriptionInput = document.querySelector('#description-input');
 // prettier-ignore
@@ -112,8 +118,8 @@ const updateFooterStat = () => {
 taskInput.addEventListener('focus', () => {
     inputContainer.classList.remove('h-[100px]');
     inputContainer.classList.add('h-[332px]');
-    descriptionInput.classList.remove('hidden');
-    descriptionInput.classList.add('show');
+    descriptionContainer.classList.remove('hidden');
+    descriptionContainer.classList.add('show');
     selectContainer.classList.remove('hidden');
     selectContainer.classList.add('show');
     difficultyContainer.classList.remove('hidden');
@@ -122,13 +128,14 @@ taskInput.addEventListener('focus', () => {
 const closeInputBox = () => {
     inputContainer.classList.remove('h-[332px]');
     inputContainer.classList.add('h-[100px]');
-    descriptionInput.classList.remove('show');
-    descriptionInput.classList.add('hidden');
+    descriptionContainer.classList.remove('show');
+    descriptionContainer.classList.add('hidden');
     selectContainer.classList.remove('show');
     selectContainer.classList.add('hidden');
     difficultyContainer.classList.remove('show');
     difficultyContainer.classList.add('hidden');
 };
+// DropDown Open And Close Handler
 const openDropDown = () => {
     const isCurrentlyHidden = exportDropdown.classList.contains('hidden');
     if (isCurrentlyHidden) {
@@ -150,6 +157,18 @@ const handleOutsideClick = (event) => {
     if (!exportDropdown.contains(target) && !exportBtn.contains(target)) {
         closeDropDown();
     }
+};
+// Limit Char Count For Task input
+const updateTaskInputCount = () => {
+    const count = taskInput.value.length;
+    const max = taskInput.maxLength;
+    taskCharCount.textContent = `${count}/${max}`;
+};
+// Limit Char Count For Description input
+const updateTextareaCount = () => {
+    const count = descriptionInput.value.length;
+    const max = descriptionInput.maxLength;
+    descriptionCharCount.textContent = `${count}/${max}`;
 };
 window.removeTask = function (id) {
     const filteredTodos = todos.filter((task) => task.id !== id);
@@ -183,6 +202,7 @@ window.completeTask = function (e, id) {
 addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', addTaskHandler);
 closeBoxBtn === null || closeBoxBtn === void 0 ? void 0 : closeBoxBtn.addEventListener('click', closeInputBox);
 exportBtn === null || exportBtn === void 0 ? void 0 : exportBtn.addEventListener('click', openDropDown);
-// exportBtn?.addEventListener('click', closeDropDOwn)
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');
+taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('input', updateTaskInputCount);
+descriptionInput === null || descriptionInput === void 0 ? void 0 : descriptionInput.addEventListener('input', updateTextareaCount);
 window.addEventListener('load', showTodos);

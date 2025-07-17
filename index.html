@@ -61,22 +61,10 @@
 							id="exportDropdown"
 							class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white hidden z-10">
 							<div class="py-1">
-								<button
-									class="dropdown-item">
-									Export as JSON
-								</button>
-								<button
-									class="dropdown-item">
-									Export as CSV
-								</button>
-								<button
-									class="dropdown-item">
-									Export as PDF
-								</button>
-								<button
-									class="dropdown-item">
-									Download Backup
-								</button>
+								<button class="dropdown-item">Export as JSON</button>
+								<button class="dropdown-item">Export as CSV</button>
+								<button class="dropdown-item">Export as PDF</button>
+								<button class="dropdown-item">Download Backup</button>
 							</div>
 						</div>
 					</div>
@@ -124,22 +112,40 @@
 				class="mb-6 p-6 h-[100px] rounded-xl shadow-lg bg-white transition-all duration-500 ease-in-out overflow-hidden">
 				<div class="flex flex-col gap-3">
 					<!-- Title Input -->
-					<input
-						id="task-input"
-						type="text"
-						placeholder="Add a new task..."
-						class="flex-1 px-4 py-3 rounded-lg border-2 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+					<div class="relative w-full">
+						<input
+							id="task-input"
+							type="text"
+							maxlength="50"
+							placeholder="Add a new task..."
+							class="flex-1 w-full px-4 py-3 pr-14 rounded-lg border-2 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+						<span
+							id="task-char-count"
+							class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 pointer-events-none">
+							0/50
+						</span>
+					</div>
 
 					<!-- Description Input -->
-					<textarea
-						id="description-input"
-						placeholder="Add a description (optional)..."
-						class="w-full hidden px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500"
-						rows="3"
-						maxlength="500"></textarea>
+					<div class="relative w-full hidden" id="description-container">
+						<textarea
+							id="description-input"
+							placeholder="Add a description (optional)"
+							class="w-full px-4 py-3 pr-14 resize-none rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500"
+							rows="3"
+							maxlength="100"></textarea>
+
+						<span
+							id="description-char-count"
+							class="absolute bottom-2 right-4 text-sm text-gray-400 pointer-events-none">
+							0/100
+						</span>
+					</div>
 
 					<div class="flex gap-3 hidden" id="select-container">
 						<select
+							name="category"
 							class="flex-1 px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 border-gray-200 text-gray-800">
 							<option value="Personal">Personal</option>
 							<option value="Work">Work</option>

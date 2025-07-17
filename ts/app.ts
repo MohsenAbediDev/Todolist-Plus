@@ -9,9 +9,15 @@ const statRemaining = document.querySelector('#stat-remaining') as HTMLElement
 const closeBoxBtn = document.querySelector('#close-box') as HTMLButtonElement
 const exportBtn = document.querySelector('#export-btn') as HTMLButtonElement
 // prettier-ignore
+const taskCharCount = document.querySelector('#task-char-count') as HTMLSpanElement
+// prettier-ignore
+const descriptionCharCount = document.querySelector('#description-char-count') as HTMLSpanElement
+// prettier-ignore
 const exportDropdown = document.querySelector('#exportDropdown') as HTMLDivElement
 // prettier-ignore
 const inputContainer = document.querySelector('#input-container') as HTMLDivElement
+// prettier-ignore
+const descriptionContainer = document.querySelector('#description-container') as HTMLDivElement
 // prettier-ignore
 const descriptionInput = document.querySelector('#description-input') as HTMLTextAreaElement
 // prettier-ignore
@@ -145,8 +151,8 @@ taskInput.addEventListener('focus', () => {
 	inputContainer.classList.remove('h-[100px]')
 	inputContainer.classList.add('h-[332px]')
 
-	descriptionInput.classList.remove('hidden')
-	descriptionInput.classList.add('show')
+	descriptionContainer.classList.remove('hidden')
+	descriptionContainer.classList.add('show')
 
 	selectContainer.classList.remove('hidden')
 	selectContainer.classList.add('show')
@@ -159,8 +165,8 @@ const closeInputBox = () => {
 	inputContainer.classList.remove('h-[332px]')
 	inputContainer.classList.add('h-[100px]')
 
-	descriptionInput.classList.remove('show')
-	descriptionInput.classList.add('hidden')
+	descriptionContainer.classList.remove('show')
+	descriptionContainer.classList.add('hidden')
 
 	selectContainer.classList.remove('show')
 	selectContainer.classList.add('hidden')
@@ -169,6 +175,7 @@ const closeInputBox = () => {
 	difficultyContainer.classList.add('hidden')
 }
 
+// DropDown Open And Close Handler
 const openDropDown = () => {
 	const isCurrentlyHidden = exportDropdown.classList.contains('hidden')
 
@@ -187,13 +194,25 @@ const closeDropDown = () => {
 
 	document.removeEventListener('click', handleOutsideClick)
 }
-
 const handleOutsideClick = (event: MouseEvent) => {
 	const target = event.target as Node
 
 	if (!exportDropdown.contains(target) && !exportBtn.contains(target)) {
 		closeDropDown()
 	}
+}
+
+// Limit Char Count For Task input
+const updateTaskInputCount = () => {
+	const count = taskInput.value.length
+	const max = taskInput.maxLength
+	taskCharCount.textContent = `${count}/${max}`
+}
+// Limit Char Count For Description input
+const updateTextareaCount = () => {
+	const count = descriptionInput.value.length
+	const max = descriptionInput.maxLength
+	descriptionCharCount.textContent = `${count}/${max}`
 }
 
 // Remove Task Handler
@@ -243,10 +262,11 @@ addTaskBtn?.addEventListener('click', addTaskHandler)
 closeBoxBtn?.addEventListener('click', closeInputBox)
 
 exportBtn?.addEventListener('click', openDropDown)
-// exportBtn?.addEventListener('click', closeDropDOwn)
 
 taskInput?.addEventListener('keydown', (e) =>
 	e.key === 'Enter' ? addTaskHandler() : ''
 )
+taskInput?.addEventListener('input', updateTaskInputCount)
+descriptionInput?.addEventListener('input', updateTextareaCount)
 
 window.addEventListener('load', showTodos)

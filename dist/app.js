@@ -8,6 +8,9 @@ const statTotal = document.querySelector('#stat-total');
 const statCompleted = document.querySelector('#stat-completed');
 const statRemaining = document.querySelector('#stat-remaining');
 const closeBoxBtn = document.querySelector('#close-box');
+const exportBtn = document.querySelector('#export-btn');
+// prettier-ignore
+const exportDropdown = document.querySelector('#exportDropdown');
 // prettier-ignore
 const inputContainer = document.querySelector('#input-container');
 // prettier-ignore
@@ -126,6 +129,28 @@ const closeInputBox = () => {
     difficultyContainer.classList.remove('show');
     difficultyContainer.classList.add('hidden');
 };
+const openDropDown = () => {
+    const isCurrentlyHidden = exportDropdown.classList.contains('hidden');
+    if (isCurrentlyHidden) {
+        exportDropdown.classList.remove('hidden');
+        exportDropdown.classList.add('show');
+        document.addEventListener('click', handleOutsideClick);
+    }
+    else {
+        closeDropDown();
+    }
+};
+const closeDropDown = () => {
+    exportDropdown.classList.add('hidden');
+    exportDropdown.classList.remove('show');
+    document.removeEventListener('click', handleOutsideClick);
+};
+const handleOutsideClick = (event) => {
+    const target = event.target;
+    if (!exportDropdown.contains(target) && !exportBtn.contains(target)) {
+        closeDropDown();
+    }
+};
 window.removeTask = function (id) {
     const filteredTodos = todos.filter((task) => task.id !== id);
     todos.length = 0;
@@ -157,5 +182,7 @@ window.completeTask = function (e, id) {
 // Event's
 addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', addTaskHandler);
 closeBoxBtn === null || closeBoxBtn === void 0 ? void 0 : closeBoxBtn.addEventListener('click', closeInputBox);
+exportBtn === null || exportBtn === void 0 ? void 0 : exportBtn.addEventListener('click', openDropDown);
+// exportBtn?.addEventListener('click', closeDropDOwn)
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');
 window.addEventListener('load', showTodos);

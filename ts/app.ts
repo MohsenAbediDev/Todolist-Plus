@@ -7,6 +7,9 @@ const statTotal = document.querySelector('#stat-total') as HTMLElement
 const statCompleted = document.querySelector('#stat-completed') as HTMLElement
 const statRemaining = document.querySelector('#stat-remaining') as HTMLElement
 const closeBoxBtn = document.querySelector('#close-box') as HTMLButtonElement
+const exportBtn = document.querySelector('#export-btn') as HTMLButtonElement
+// prettier-ignore
+const exportDropdown = document.querySelector('#exportDropdown') as HTMLDivElement
 // prettier-ignore
 const inputContainer = document.querySelector('#input-container') as HTMLDivElement
 // prettier-ignore
@@ -166,6 +169,33 @@ const closeInputBox = () => {
 	difficultyContainer.classList.add('hidden')
 }
 
+const openDropDown = () => {
+	const isCurrentlyHidden = exportDropdown.classList.contains('hidden')
+
+	if (isCurrentlyHidden) {
+		exportDropdown.classList.remove('hidden')
+		exportDropdown.classList.add('show')
+
+		document.addEventListener('click', handleOutsideClick)
+	} else {
+		closeDropDown()
+	}
+}
+const closeDropDown = () => {
+	exportDropdown.classList.add('hidden')
+	exportDropdown.classList.remove('show')
+
+	document.removeEventListener('click', handleOutsideClick)
+}
+
+const handleOutsideClick = (event: MouseEvent) => {
+	const target = event.target as Node
+
+	if (!exportDropdown.contains(target) && !exportBtn.contains(target)) {
+		closeDropDown()
+	}
+}
+
 // Remove Task Handler
 ;(window as any).removeTask = function (id: number) {
 	const filteredTodos: Task[] = todos.filter((task) => task.id !== id)
@@ -211,6 +241,9 @@ const closeInputBox = () => {
 addTaskBtn?.addEventListener('click', addTaskHandler)
 
 closeBoxBtn?.addEventListener('click', closeInputBox)
+
+exportBtn?.addEventListener('click', openDropDown)
+// exportBtn?.addEventListener('click', closeDropDOwn)
 
 taskInput?.addEventListener('keydown', (e) =>
 	e.key === 'Enter' ? addTaskHandler() : ''

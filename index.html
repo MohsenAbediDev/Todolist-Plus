@@ -27,18 +27,74 @@
 					<h1 class="text-4xl font-bold text-gray-800 mb-2">To-Do List</h1>
 					<p class="text-sm text-gray-600">Stay organized and productive</p>
 				</div>
+
+				<!-- Action Button's -->
 				<div class="flex items-center gap-3">
+					<!-- Export Btn -->
+					<div class="relative">
+						<button
+							id="export-btn"
+							class="rounded flex items-center whitespace-nowrap cursor-pointer py-3 px-4 bg-[#3b82f6] text-white transition-all duration-300">
+							<!-- Download Icon -->
+							<span
+								role="img"
+								aria-label="download"
+								class="anticon anticon-download mr-2">
+								<svg
+									viewBox="64 64 896 896"
+									focusable="false"
+									data-icon="download"
+									width="1.1em"
+									height="1.1em"
+									fill="currentColor"
+									aria-hidden="true">
+									<path
+										d="M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
+								</svg>
+							</span>
+
+							Export
+						</button>
+
+						<!-- Drop Down -->
+						<div
+							id="exportDropdown"
+							class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white hidden z-10">
+							<div class="py-1">
+								<button
+									class="dropdown-item">
+									Export as JSON
+								</button>
+								<button
+									class="dropdown-item">
+									Export as CSV
+								</button>
+								<button
+									class="dropdown-item">
+									Export as PDF
+								</button>
+								<button
+									class="dropdown-item">
+									Download Backup
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Color Input -->
 					<div class="relative group">
 						<button
 							class="rounded text-white bg-[#377ae6] cursor-pointer py-3 px-4 transition-all duration-300">
 							<i class="fas fa-palette text-white"></i>
 						</button>
+
 						<input
 							type="color"
 							class="absolute opacity-0 inset-0 w-full h-full cursor-pointer"
 							value="#377ae6" />
 					</div>
 
+					<!-- Change Theme Btn -->
 					<button
 						id="toggle-theme"
 						class="rounded cursor-pointer py-3 px-4 bg-gray-800 text-white hover:bg-gray-700">

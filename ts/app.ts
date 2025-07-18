@@ -90,7 +90,7 @@ const addTaskHandler = () => {
 		descriptionInput.value = ''
 		taskCharCount.textContent = `0/50`
 		descriptionCharCount.textContent = `0/100`
-	}
+	} else notyf.error('Please Fill Task Title !')
 }
 
 const showTodos = () => {

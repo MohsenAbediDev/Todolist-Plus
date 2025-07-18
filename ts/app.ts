@@ -3,6 +3,7 @@ const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
 const progressBar = document.querySelector('#progress-bar') as HTMLDivElement
 const filterBox = document.querySelector('#filter-box') as HTMLDivElement
 const tasksContainer = document.querySelector('#task-list') as HTMLDivElement
+const category = document.querySelector('#category') as HTMLSelectElement
 const footer = document.querySelector('#footer') as HTMLDivElement
 const statTotal = document.querySelector('#stat-total') as HTMLElement
 const statCompleted = document.querySelector('#stat-completed') as HTMLElement
@@ -28,9 +29,15 @@ const difficultyContainer = document.querySelector('#difficulty-container') as H
 // prettier-ignore
 const noTaskMessage = document.querySelector('#noTask-message') as HTMLDivElement
 
+// prettier-ignore
+const difficultyLevels = document.querySelectorAll<HTMLButtonElement>('#difficulty-levels button')
+
 interface Task {
 	id: number
 	title: string
+	description: string
+	category: string
+	level: number
 	isCompleted: boolean
 }
 declare var Notyf: any
@@ -46,6 +53,9 @@ const storedTodos = localStorage.getItem('todos')
 const todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
 
 const addTaskHandler = () => {
+	// prettier-ignore
+	const levelsSelected = document.querySelectorAll<HTMLButtonElement>('#difficulty-levels button.text-yellow-400')
+
 	const value = taskInput.value.trim()
 	const isDuplicate = todos.some(
 		(todo) => todo.title.trim().toLowerCase() === value.toLowerCase()
@@ -61,6 +71,9 @@ const addTaskHandler = () => {
 		const newTodo = {
 			id: todos.length + 1,
 			title: value,
+			description: descriptionInput.value,
+			category: category.value,
+			level: levelsSelected.length,
 			isCompleted: false,
 		}
 		todos.push(newTodo)
@@ -68,10 +81,10 @@ const addTaskHandler = () => {
 
 		showAnimation()
 		updateFooterStat()
+		resetStars()
+		closeInputBox()
 
 		todoGenerator(newTodo)
-
-		closeInputBox()
 
 		taskInput.value = ''
 		descriptionInput.value = ''
@@ -244,6 +257,34 @@ const updateTextareaCount = () => {
 	const max = descriptionInput.maxLength
 	descriptionCharCount.textContent = `${count}/${max}`
 }
+
+// Reset Stars to one yellow star
+const resetStars = () => {
+	difficultyLevels.forEach((btn, i) => {
+		console.log(i)
+		if (i > 0) {
+			btn.classList.add('text-gray-300')
+			btn.classList.remove('text-yellow-400')
+		}
+	})
+}
+
+// Change difficulty Levels
+difficultyLevels.forEach((level, index) => {
+	level.addEventListener('click', () => {
+		const isGray = level.classList.contains('text-gray-300')
+
+		difficultyLevels.forEach((btn, i) => {
+			if (isGray && i <= index) {
+				btn.classList.add('text-yellow-400')
+				btn.classList.remove('text-gray-300')
+			} else if (i > index) {
+				btn.classList.add('text-gray-300')
+				btn.classList.remove('text-yellow-400')
+			}
+		})
+	})
+})
 
 // Remove Task Handler
 ;(window as any).removeTask = function (id: number) {

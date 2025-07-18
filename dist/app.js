@@ -4,6 +4,7 @@ const addTaskBtn = document.querySelector('#add-task');
 const progressBar = document.querySelector('#progress-bar');
 const filterBox = document.querySelector('#filter-box');
 const tasksContainer = document.querySelector('#task-list');
+const category = document.querySelector('#category');
 const footer = document.querySelector('#footer');
 const statTotal = document.querySelector('#stat-total');
 const statCompleted = document.querySelector('#stat-completed');
@@ -28,6 +29,8 @@ const selectContainer = document.querySelector('#select-container');
 const difficultyContainer = document.querySelector('#difficulty-container');
 // prettier-ignore
 const noTaskMessage = document.querySelector('#noTask-message');
+// prettier-ignore
+const difficultyLevels = document.querySelectorAll('#difficulty-levels button');
 const notyf = new Notyf({
     position: {
         x: 'right',
@@ -37,6 +40,8 @@ const notyf = new Notyf({
 const storedTodos = localStorage.getItem('todos');
 const todos = storedTodos ? JSON.parse(storedTodos) : [];
 const addTaskHandler = () => {
+    // prettier-ignore
+    const levelsSelected = document.querySelectorAll('#difficulty-levels button.text-yellow-400');
     const value = taskInput.value.trim();
     const isDuplicate = todos.some((todo) => todo.title.trim().toLowerCase() === value.toLowerCase());
     if (isDuplicate) {
@@ -47,14 +52,18 @@ const addTaskHandler = () => {
         const newTodo = {
             id: todos.length + 1,
             title: value,
+            description: descriptionInput.value,
+            category: category.value,
+            level: levelsSelected.length,
             isCompleted: false,
         };
         todos.push(newTodo);
         localStorage.setItem('todos', JSON.stringify(todos));
         showAnimation();
         updateFooterStat();
-        todoGenerator(newTodo);
+        resetStars();
         closeInputBox();
+        todoGenerator(newTodo);
         taskInput.value = '';
         descriptionInput.value = '';
         taskCharCount.textContent = `0/50`;
@@ -198,6 +207,32 @@ const updateTextareaCount = () => {
     const max = descriptionInput.maxLength;
     descriptionCharCount.textContent = `${count}/${max}`;
 };
+// Reset Stars to one yellow star
+const resetStars = () => {
+    difficultyLevels.forEach((btn, i) => {
+        console.log(i);
+        if (i > 0) {
+            btn.classList.add('text-gray-300');
+            btn.classList.remove('text-yellow-400');
+        }
+    });
+};
+// Change difficulty Levels
+difficultyLevels.forEach((level, index) => {
+    level.addEventListener('click', () => {
+        const isGray = level.classList.contains('text-gray-300');
+        difficultyLevels.forEach((btn, i) => {
+            if (isGray && i <= index) {
+                btn.classList.add('text-yellow-400');
+                btn.classList.remove('text-gray-300');
+            }
+            else if (i > index) {
+                btn.classList.add('text-gray-300');
+                btn.classList.remove('text-yellow-400');
+            }
+        });
+    });
+});
 window.removeTask = function (id) {
     const filteredTodos = todos.filter((task) => task.id !== id);
     todos.length = 0;

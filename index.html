@@ -126,6 +126,7 @@
 					<div class="flex items-center gap-2">
 						<span class="text-sm text-gray-600">Category:</span>
 						<select
+							name="category-filter"
 							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border bg-white border-gray-200 text-gray-800">
 							<option value="all">All</option>
 							<option value="Personal">Personal</option>
@@ -192,6 +193,7 @@
 					<div class="flex gap-3 hidden" id="select-container">
 						<select
 							name="category"
+							id="category"
 							class="flex-1 px-4 py-3 rounded-lg border-2 transition-all duration-300 input-focus bg-gray-50 border-gray-200 text-gray-800">
 							<option value="Personal">Personal</option>
 							<option value="Work">Work</option>
@@ -215,20 +217,24 @@
 						id="difficulty-container">
 						<div class="flex items-center gap-2">
 							<span class="text-sm text-gray-600">Difficulty:</span>
-							<div class="flex gap-1">
+							<div id="difficulty-levels" class="flex gap-1">
 								<button
 									class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
-									<i class="fas fa-star"></i></button
-								><button
-									class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
-									<i class="fas fa-star"></i></button
-								><button
+									<i class="fas fa-star"></i>
+								</button>
+								<button
 									class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
-									<i class="fas fa-star"></i></button
-								><button
+									<i class="fas fa-star"></i>
+								</button>
+								<button
 									class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
-									<i class="fas fa-star"></i></button
-								><button
+									<i class="fas fa-star"></i>
+								</button>
+								<button
+									class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
+									<i class="fas fa-star"></i>
+								</button>
+								<button
 									class="text-xl cursor-pointer transition-colors duration-200 text-gray-300">
 									<i class="fas fa-star"></i>
 								</button>

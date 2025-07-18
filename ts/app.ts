@@ -112,6 +112,27 @@ const todoGenerator = (todo: Task) => {
 						</span>
 
 					<div class="flex items-center gap-2 transition-opacity duration-200">
+						<!-- Stars -->
+						<div class="flex gap-1">
+							<span class="text-sm text-yellow-400">
+								<i class="fas fa-star"></i>
+							</span>
+							<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>
+							<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>
+							<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>
+							<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>
+						</div> 
+					
+						<!-- Timer --> 
+						<div class="flex items-center gap-2">
+							<span class="text-md text-gray-500">00:00:00</span>
+							<button
+								class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200">
+								Start
+							</button>
+						</div>
+
+						<!-- Delete Task -->
 						<button 
 							onclick="removeTask(${todo.id})"
 							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-red-400 text-white hover:bg-red-500 transition-colors duration-200">

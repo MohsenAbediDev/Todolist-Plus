@@ -2,6 +2,7 @@
 const taskInput = document.querySelector('#task-input');
 const addTaskBtn = document.querySelector('#add-task');
 const progressBar = document.querySelector('#progress-bar');
+const filterBox = document.querySelector('#filter-box');
 const tasksContainer = document.querySelector('#task-list');
 const footer = document.querySelector('#footer');
 const statTotal = document.querySelector('#stat-total');
@@ -56,6 +57,8 @@ const addTaskHandler = () => {
         closeInputBox();
         taskInput.value = '';
         descriptionInput.value = '';
+        taskCharCount.textContent = `0/50`;
+        descriptionCharCount.textContent = `0/100`;
     }
 };
 const showTodos = () => {
@@ -96,6 +99,8 @@ const todoGenerator = (todo) => {
 const showAnimation = () => {
     tasksContainer.classList.add('fade-in');
     tasksContainer.classList.remove('hidden');
+    filterBox.classList.add('fade-in');
+    filterBox.classList.remove('hidden');
     noTaskMessage.classList.add('hidden');
     if (todos.length > 0) {
         footer.classList.add('fade-in');
@@ -104,6 +109,8 @@ const showAnimation = () => {
     else {
         footer.classList.add('hidden');
         footer.classList.remove('fade-in');
+        filterBox.classList.add('hidden');
+        filterBox.classList.remove('fade-in');
         noTaskMessage.classList.remove('hidden');
     }
 };

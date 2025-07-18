@@ -72,7 +72,7 @@
 					<!-- Color Input -->
 					<div class="relative group">
 						<button
-							class="rounded text-white bg-[#377ae6] cursor-pointer py-3 px-4 transition-all duration-300">
+							class="rounded text-white bg-[#3b82f6] cursor-pointer py-3 px-4 transition-all duration-300">
 							<i class="fas fa-palette text-white"></i>
 						</button>
 
@@ -106,7 +106,51 @@
 				</div>
 			</div>
 
-			<!-- Input Section -->
+			<!-- Filter Sectioon -->
+			<div id="filter-box" class="mb-4 p-4 rounded-xl shadow-lg bg-white hidden">
+				<div class="flex flex-wrap gap-4 items-center">
+					<!-- Select Status Filter -->
+					<div class="flex items-center gap-2">
+						<span class="text-sm text-gray-600">Status:</span>
+						<select
+							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border bg-white border-gray-200 text-gray-800">
+							<option value="all">All</option>
+							<option value="completed">Completed</option>
+							<option value="active">Remain</option>
+						</select>
+					</div>
+
+					<!-- Select Category Filter -->
+					<div class="flex items-center gap-2">
+						<span class="text-sm text-gray-600">Category:</span>
+						<select
+							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border bg-white border-gray-200 text-gray-800">
+							<option value="all">All</option>
+							<option value="Personal">Personal</option>
+							<option value="Work">Work</option>
+							<option value="Shopping">Shopping</option>
+							<option value="Health">Health</option>
+							<option value="Education">Education</option>
+						</select>
+					</div>
+
+					<!-- Select Difficulty Filter -->
+					<div class="flex items-center gap-2">
+						<span class="text-sm text-gray-600">Difficulty:</span>
+						<select
+							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border bg-white border-gray-200 text-gray-800">
+							<option value="all">All</option>
+							<option value="1">Level 1</option>
+							<option value="2">Level 2</option>
+							<option value="3">Level 3</option>
+							<option value="4">Level 4</option>
+							<option value="5">Level 5</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<!-- Task Input Section -->
 			<div
 				id="input-container"
 				class="mb-6 p-6 h-[100px] rounded-xl shadow-lg bg-white transition-all duration-500 ease-in-out overflow-hidden">
@@ -118,7 +162,7 @@
 							type="text"
 							maxlength="50"
 							placeholder="Add a new task..."
-							class="flex-1 w-full px-4 py-3 pr-14 rounded-lg border-2 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+							class="flex-1 w-full px-4 py-3 pr-14 rounded-lg border-2 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 input-focus" />
 
 						<span
 							id="task-char-count"
@@ -132,7 +176,7 @@
 						<textarea
 							id="description-input"
 							placeholder="Add a description (optional)"
-							class="w-full px-4 py-3 pr-14 resize-none rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500"
+							class="w-full px-4 py-3 pr-14 resize-none rounded-lg border-2 transition-all duration-300 input-focus bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500"
 							rows="3"
 							maxlength="100"></textarea>
 
@@ -146,7 +190,7 @@
 					<div class="flex gap-3 hidden" id="select-container">
 						<select
 							name="category"
-							class="flex-1 px-4 py-3 rounded-lg border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 border-gray-200 text-gray-800">
+							class="flex-1 px-4 py-3 rounded-lg border-2 transition-all duration-300 input-focus bg-gray-50 border-gray-200 text-gray-800">
 							<option value="Personal">Personal</option>
 							<option value="Work">Work</option>
 							<option value="Shopping">Shopping</option>

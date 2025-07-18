@@ -1,6 +1,7 @@
 const taskInput = document.querySelector('#task-input') as HTMLInputElement
 const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
 const progressBar = document.querySelector('#progress-bar') as HTMLDivElement
+const filterBox = document.querySelector('#filter-box') as HTMLDivElement
 const tasksContainer = document.querySelector('#task-list') as HTMLDivElement
 const footer = document.querySelector('#footer') as HTMLDivElement
 const statTotal = document.querySelector('#stat-total') as HTMLElement
@@ -74,6 +75,8 @@ const addTaskHandler = () => {
 
 		taskInput.value = ''
 		descriptionInput.value = ''
+		taskCharCount.textContent = `0/50`
+		descriptionCharCount.textContent = `0/100`
 	}
 }
 
@@ -124,6 +127,9 @@ const showAnimation = () => {
 	tasksContainer.classList.add('fade-in')
 	tasksContainer.classList.remove('hidden')
 
+	filterBox.classList.add('fade-in')
+	filterBox.classList.remove('hidden')
+
 	noTaskMessage.classList.add('hidden')
 
 	if (todos.length > 0) {
@@ -132,6 +138,9 @@ const showAnimation = () => {
 	} else {
 		footer.classList.add('hidden')
 		footer.classList.remove('fade-in')
+
+		filterBox.classList.add('hidden')
+		filterBox.classList.remove('fade-in')
 
 		noTaskMessage.classList.remove('hidden')
 	}

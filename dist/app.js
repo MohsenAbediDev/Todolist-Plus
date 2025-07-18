@@ -37,7 +37,7 @@ const notyf = new Notyf({
     },
 });
 const storedTodos = localStorage.getItem('todos');
-const todos = storedTodos ? JSON.parse(storedTodos) : [];
+let todos = storedTodos ? JSON.parse(storedTodos) : [];
 const addTaskHandler = () => {
     // prettier-ignore
     const levelsSelected = document.querySelectorAll('#difficulty-levels button.text-yellow-400');

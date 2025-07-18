@@ -48,7 +48,7 @@ const notyf = new Notyf({
 })
 
 const storedTodos = localStorage.getItem('todos')
-const todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
+let todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
 
 const addTaskHandler = () => {
 	// prettier-ignore
@@ -377,6 +377,6 @@ window.addEventListener('load', () => {
 	showTodos()
 	loader.classList.add('fade-out')
 	loader.addEventListener('animationend', () => {
-		loader.classList.add('hidden') 
+		loader.classList.add('hidden')
 	})
 })

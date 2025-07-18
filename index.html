@@ -61,10 +61,10 @@
 							id="exportDropdown"
 							class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white hidden z-10">
 							<div class="py-1">
-								<button class="dropdown-item">Export as JSON</button>
-								<button class="dropdown-item">Export as CSV</button>
-								<button class="dropdown-item">Export as PDF</button>
-								<button class="dropdown-item">Download Backup</button>
+								<button id="exprt-json" class="dropdown-item">Export as JSON</button>
+								<button id="exprt-csv" class="dropdown-item">Export as CSV</button>
+								<button id="exprt-pdf" class="dropdown-item">Export as PDF</button>
+								<button id="exprt-backup" class="dropdown-item">Download Backup</button>
 							</div>
 						</div>
 					</div>
@@ -280,6 +280,8 @@
 		</div>
 
 		<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 		<script src="./dist/app.js" type="module"></script>
+		<script src="./dist/exports.js" type="module"></script>
 	</body>
 </html>

@@ -80,51 +80,54 @@ const showTodos = () => {
     }
 };
 const todoGenerator = (todo) => {
+    // Create stars
+    let starsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= todo.level) {
+            starsHtml += `<span class="text-sm text-yellow-400"><i class="fas fa-star"></i></span>`;
+        }
+        else {
+            starsHtml += `<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>`;
+        }
+    }
     tasksContainer.insertAdjacentHTML('beforeend', `
-			<div
-				class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white">
-				<div class="flex items-center gap-3">
-						<input type="checkbox" 
-							name="task-${todo.id}" 
-							onchange="completeTask(event, ${todo.id})" 
-							class="checkbox-custom cursor-pointer" 
-							${todo.isCompleted ? 'checked' : ''} />
+		<div class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white">
+			<div class="flex items-center gap-3">
+				<input type="checkbox" 
+					name="task-${todo.id}" 
+					onchange="completeTask(event, ${todo.id})" 
+					class="checkbox-custom cursor-pointer" 
+					${todo.isCompleted ? 'checked' : ''} />
 
-						<span 
-							class="flex-1 ${todo.isCompleted ? 'line-through opacity-50' : ''} cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500">
-							${todo.title}
-						</span>
+				<span 
+					class="flex-1 ${todo.isCompleted ? 'line-through opacity-50' : ''} cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500">
+					${todo.title}
+				</span>
 
-					<div class="flex items-center gap-2 transition-opacity duration-200">
-						<!-- Stars -->
-						<div class="flex gap-1">
-							<span class="text-sm text-yellow-400">
-								<i class="fas fa-star"></i>
-							</span>
-							<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>
-							<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>
-							<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>
-							<span class="text-sm text-gray-300"><i class="fas fa-star"></i></span>
-						</div> 
-					
-						<!-- Timer --> 
-						<div class="flex items-center gap-2">
-							<span class="text-md text-gray-500">00:00:00</span>
-							<button
-								class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200">
-								Start
-							</button>
-						</div>
-
-						<!-- Delete Task -->
-						<button 
-							onclick="removeTask(${todo.id})"
-							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-red-400 text-white hover:bg-red-500 transition-colors duration-200">
-							<i class="fas fa-trash text-white"></i>
+				<div class="flex items-center gap-2 transition-opacity duration-200">
+					<!-- Stars -->
+					<div class="flex gap-1">
+						${starsHtml}
+					</div> 
+				
+					<!-- Timer --> 
+					<div class="flex items-center gap-2">
+						<span class="text-md text-gray-500">00:00:00</span>
+						<button
+							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200">
+							Start
 						</button>
 					</div>
+
+					<!-- Delete Task -->
+					<button 
+						onclick="removeTask(${todo.id})"
+						class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-red-400 text-white hover:bg-red-500 transition-colors duration-200">
+						<i class="fas fa-trash text-white"></i>
+					</button>
 				</div>
-			</div>`);
+			</div>
+		</div>`);
 };
 const showAnimation = () => {
     tasksContainer.classList.add('fade-in');

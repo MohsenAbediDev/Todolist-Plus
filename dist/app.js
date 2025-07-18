@@ -1,7 +1,6 @@
 "use strict";
 const taskInput = document.querySelector('#task-input');
 const addTaskBtn = document.querySelector('#add-task');
-const progressBar = document.querySelector('#progress-bar');
 const filterBox = document.querySelector('#filter-box');
 const tasksContainer = document.querySelector('#task-list');
 const category = document.querySelector('#category');
@@ -119,7 +118,7 @@ const todoGenerator = (todo) => {
 					</div> 
 				
 					<!-- Timer --> 
-					<div class="flex items-center gap-2">
+					<div class="flex items-center flex-col-reverse sm:flex-row gap-2">
 						<span class="text-md text-gray-500">00:00:00</span>
 						<button
 							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200">
@@ -197,7 +196,7 @@ const closeInputBox = () => {
     difficultyContainer.classList.remove('show');
     difficultyContainer.classList.add('hidden');
 };
-// DropDown Open And Close Handler
+// Open DropDown Handler
 const openDropDown = () => {
     const isCurrentlyHidden = exportDropdown.classList.contains('hidden');
     if (isCurrentlyHidden) {
@@ -209,6 +208,7 @@ const openDropDown = () => {
         closeDropDown();
     }
 };
+// Close DropDown Handler
 const closeDropDown = () => {
     exportDropdown.classList.add('hidden');
     exportDropdown.classList.remove('show');
@@ -235,7 +235,6 @@ const updateTextareaCount = () => {
 // Reset Stars to one yellow star
 const resetStars = () => {
     difficultyLevels.forEach((btn, i) => {
-        console.log(i);
         if (i > 0) {
             btn.classList.add('text-gray-300');
             btn.classList.remove('text-yellow-400');
@@ -299,4 +298,11 @@ exportBtn === null || exportBtn === void 0 ? void 0 : exportBtn.addEventListener
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('input', updateTaskInputCount);
 descriptionInput === null || descriptionInput === void 0 ? void 0 : descriptionInput.addEventListener('input', updateTextareaCount);
-window.addEventListener('load', showTodos);
+window.addEventListener('load', () => {
+    const loader = document.querySelector('#loader-container');
+    showTodos();
+    loader.classList.add('fade-out');
+    loader.addEventListener('animationend', () => {
+        loader.classList.add('hidden');
+    });
+});

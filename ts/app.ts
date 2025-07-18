@@ -1,6 +1,5 @@
 const taskInput = document.querySelector('#task-input') as HTMLInputElement
 const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
-const progressBar = document.querySelector('#progress-bar') as HTMLDivElement
 const filterBox = document.querySelector('#filter-box') as HTMLDivElement
 const tasksContainer = document.querySelector('#task-list') as HTMLDivElement
 const category = document.querySelector('#category') as HTMLSelectElement
@@ -144,7 +143,7 @@ const todoGenerator = (todo: Task) => {
 					</div> 
 				
 					<!-- Timer --> 
-					<div class="flex items-center gap-2">
+					<div class="flex items-center flex-col-reverse sm:flex-row gap-2">
 						<span class="text-md text-gray-500">00:00:00</span>
 						<button
 							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200">
@@ -241,7 +240,7 @@ const closeInputBox = () => {
 	difficultyContainer.classList.add('hidden')
 }
 
-// DropDown Open And Close Handler
+// Open DropDown Handler
 const openDropDown = () => {
 	const isCurrentlyHidden = exportDropdown.classList.contains('hidden')
 
@@ -254,6 +253,7 @@ const openDropDown = () => {
 		closeDropDown()
 	}
 }
+// Close DropDown Handler
 const closeDropDown = () => {
 	exportDropdown.classList.add('hidden')
 	exportDropdown.classList.remove('show')
@@ -284,7 +284,6 @@ const updateTextareaCount = () => {
 // Reset Stars to one yellow star
 const resetStars = () => {
 	difficultyLevels.forEach((btn, i) => {
-		console.log(i)
 		if (i > 0) {
 			btn.classList.add('text-gray-300')
 			btn.classList.remove('text-yellow-400')
@@ -372,4 +371,12 @@ taskInput?.addEventListener('keydown', (e) =>
 taskInput?.addEventListener('input', updateTaskInputCount)
 descriptionInput?.addEventListener('input', updateTextareaCount)
 
-window.addEventListener('load', showTodos)
+window.addEventListener('load', () => {
+	const loader = document.querySelector('#loader-container') as HTMLDivElement
+
+	showTodos()
+	loader.classList.add('fade-out')
+	loader.addEventListener('animationend', () => {
+		loader.classList.add('hidden') 
+	})
+})

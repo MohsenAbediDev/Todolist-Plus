@@ -91,21 +91,6 @@
 				</div>
 			</div>
 
-			<!-- Progress Section -->
-			<div
-				class="mb-6 p-4 rounded-lg bg-white shadow-lg hidden"
-				id="progress-bar">
-				<div class="flex justify-between items-center mb-2">
-					<span class="text-sm font-medium text-gray-700">Progress</span>
-					<span class="text-sm text-gray-600">0 of 0 completed</span>
-				</div>
-				<div class="w-full bg-gray-200 rounded-full h-2">
-					<div
-						class="progress-bar bg-blue-500 h-2 rounded-full"
-						style="width: 0%"></div>
-				</div>
-			</div>
-
 			<!-- Filter Sectioon -->
 			<div
 				id="filter-box"
@@ -285,6 +270,13 @@
 					</span>
 				</div>
 			</div>
+		</div>
+
+		<!-- Loader -->
+		<div
+			id="loader-container"
+			class="flex items-center justify-center absolute top-0 w-full h-full z-50 bg-gradient-to-br from-blue-50 to-indigo-100">
+			<div class="loader"></div>
 		</div>
 
 		<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>

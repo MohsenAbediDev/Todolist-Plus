@@ -28,7 +28,6 @@ const selectContainer = document.querySelector('#select-container') as HTMLDivEl
 const difficultyContainer = document.querySelector('#difficulty-container') as HTMLDivElement
 // prettier-ignore
 const noTaskMessage = document.querySelector('#noTask-message') as HTMLDivElement
-
 // prettier-ignore
 const difficultyLevels = document.querySelectorAll<HTMLButtonElement>('#difficulty-levels button')
 
@@ -89,7 +88,7 @@ const addTaskHandler = () => {
 		taskInput.value = ''
 		descriptionInput.value = ''
 		taskCharCount.textContent = `0/50`
-		descriptionCharCount.textContent = `0/100`
+		descriptionCharCount.textContent = `0/70`
 	} else notyf.error('Please Fill Task Title !')
 }
 
@@ -105,6 +104,8 @@ const showTodos = () => {
 }
 
 const todoGenerator = (todo: Task) => {
+	const isCompletedClass = todo.isCompleted ? 'line-through opacity-50' : ''
+
 	// Create stars
 	let starsHtml = ''
 	for (let i = 1; i <= 5; i++) {
@@ -118,7 +119,7 @@ const todoGenerator = (todo: Task) => {
 	tasksContainer.insertAdjacentHTML(
 		'beforeend',
 		`
-		<div class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white">
+		<div class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white overflow-hidden">
 			<div class="flex items-center gap-3">
 				<input type="checkbox" 
 					name="task-${todo.id}" 
@@ -126,12 +127,15 @@ const todoGenerator = (todo: Task) => {
 					class="checkbox-custom cursor-pointer" 
 					${todo.isCompleted ? 'checked' : ''} />
 
-				<span 
-					class="flex-1 ${
-						todo.isCompleted ? 'line-through opacity-50' : ''
-					} cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500">
-					${todo.title}
-				</span>
+				<div class="flex flex-1 flex-col gap-y-1">
+					<span class="${`${isCompletedClass} cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500`.trim()}">
+						${todo.title}
+					</span>
+
+					<span class="self-start text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+						${todo.category}
+					</span>
+				</div>
 
 				<div class="flex items-center gap-2 transition-opacity duration-200">
 					<!-- Stars -->
@@ -156,6 +160,22 @@ const todoGenerator = (todo: Task) => {
 					</button>
 				</div>
 			</div>
+
+			${
+				todo.description.length > 0
+					? `
+					<div class="relative flex flex-col mt-2.5 py-2"> 
+						<i onclick="showDescription(event, ${todo.id})" class="fa-solid fa-caret-down absolute top-0 transition-all duration-400 cursor-pointer text-gray-600"></i>
+
+						<div class="w-[96%] h-[1px] ml-5 bg-gray-300"></div>
+
+						<div id="desc-${todo.id}" class="flex items-center gap-1 mt-3 h-0 transition-all duration-300 overflow-hidden">
+							<span class="text-sm text-gray-700">Description:</span>  
+							<p class="text-sm text-gray-500">${todo.description}</p>
+						</div>
+					</div>`
+					: ''
+			}
 		</div>`
 	)
 }
@@ -305,6 +325,15 @@ difficultyLevels.forEach((level, index) => {
 	showTodos()
 
 	notyf.success('Task has been deleted !')
+}
+
+// Show Description Handler
+;(window as any).showDescription = function (e: Event, id: number) {
+	const descriptionBox = document.querySelector(`#desc-${id}`)
+	const icon = e.currentTarget as HTMLElement
+
+	icon.classList.toggle('-rotate-180')
+	descriptionBox?.classList.toggle('h-8')
 }
 
 // Complete Task Handler

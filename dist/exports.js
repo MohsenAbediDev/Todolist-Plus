@@ -14,17 +14,12 @@ const exportJsonBtn = document.querySelector('#export-json');
 const exportCsvBtn = document.querySelector('#export-csv');
 const exportPdfBtn = document.querySelector('#export-pdf');
 const getJsonFileInput = document.querySelector('#jsonFile');
-// prettier-ignore
-const fileSpan = document.querySelector('#show-backup-file');
-// prettier-ignore
-const fileInput = document.querySelector('#file-input');
-// prettier-ignore
-const importBackupBtn = document.querySelector('#import-backup');
+const fileSpan = document.querySelector('#show-backup-file'); /* prettier-ignore */
+const fileInput = document.querySelector('#file-input'); /* prettier-ignore */
+const importBackupBtn = document.querySelector('#import-backup'); /* prettier-ignore */
 const backupModal = document.querySelector('#backup-modal');
-// prettier-ignore
-const closeModalBtn = document.querySelector('#close-backup-modal');
-// prettier-ignore
-const uploadBackupFileBtn = document.querySelector('#upload-backup-file');
+const closeModalBtn = document.querySelector('#close-backup-modal'); /* prettier-ignore */
+const uploadBackupFileBtn = document.querySelector('#upload-backup-file'); /* prettier-ignore */
 // General download function for JSON & CSV
 const downloadFile = (content, type, filename) => {
     const blob = new Blob([content], { type });

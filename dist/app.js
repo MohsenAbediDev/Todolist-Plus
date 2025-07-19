@@ -1,3 +1,5 @@
+// @ts-ignore
+import { applyStoredTheme } from '../dist/theme.js';
 const taskInput = document.querySelector('#task-input');
 const addTaskBtn = document.querySelector('#add-task');
 const filterBox = document.querySelector('#filter-box');
@@ -9,26 +11,16 @@ const statCompleted = document.querySelector('#stat-completed');
 const statRemaining = document.querySelector('#stat-remaining');
 const closeBoxBtn = document.querySelector('#close-box');
 const exportBtn = document.querySelector('#export-btn');
-// prettier-ignore
-const taskCharCount = document.querySelector('#task-char-count');
-// prettier-ignore
-const descriptionCharCount = document.querySelector('#description-char-count');
-// prettier-ignore
-const exportDropdown = document.querySelector('#exportDropdown');
-// prettier-ignore
-const inputContainer = document.querySelector('#input-container');
-// prettier-ignore
-const descriptionContainer = document.querySelector('#description-container');
-// prettier-ignore
-const descriptionInput = document.querySelector('#description-input');
-// prettier-ignore
-const selectContainer = document.querySelector('#select-container');
-// prettier-ignore
-const difficultyContainer = document.querySelector('#difficulty-container');
-// prettier-ignore
-const noTaskMessage = document.querySelector('#noTask-message');
-// prettier-ignore
-const difficultyLevels = document.querySelectorAll('#difficulty-levels button');
+const taskCharCount = document.querySelector('#task-char-count'); /* prettier-ignore */
+const descriptionCharCount = document.querySelector('#description-char-count'); /* prettier-ignore */
+const exportDropdown = document.querySelector('#exportDropdown'); /* prettier-ignore */
+const inputContainer = document.querySelector('#input-container'); /* prettier-ignore */
+const descriptionContainer = document.querySelector('#description-container'); /* prettier-ignore */
+const descriptionInput = document.querySelector('#description-input'); /* prettier-ignore */
+const selectContainer = document.querySelector('#select-container'); /* prettier-ignore */
+const difficultyContainer = document.querySelector('#difficulty-container'); /* prettier-ignore */
+const noTaskMessage = document.querySelector('#noTask-message'); /* prettier-ignore */
+const difficultyLevels = document.querySelectorAll('#difficulty-levels button'); /* prettier-ignore */
 export const notyf = new Notyf({
     position: {
         x: 'right',
@@ -309,6 +301,7 @@ descriptionInput === null || descriptionInput === void 0 ? void 0 : descriptionI
 window.addEventListener('load', () => {
     const loader = document.querySelector('#loader-container');
     showTodos();
+    applyStoredTheme();
     loader.classList.add('fade-out');
     loader.addEventListener('animationend', () => {
         loader.classList.add('hidden');

@@ -6,17 +6,12 @@ const exportJsonBtn = document.querySelector('#export-json') as HTMLButtonElemen
 const exportCsvBtn = document.querySelector('#export-csv') as HTMLButtonElement
 const exportPdfBtn = document.querySelector('#export-pdf') as HTMLButtonElement
 const getJsonFileInput = document.querySelector('#jsonFile') as HTMLInputElement
-// prettier-ignore
-const fileSpan = document.querySelector('#show-backup-file') as HTMLSpanElement
-// prettier-ignore
-const fileInput = document.querySelector('#file-input') as HTMLLabelElement
-// prettier-ignore
-const importBackupBtn = document.querySelector('#import-backup') as HTMLButtonElement
+const fileSpan = document.querySelector('#show-backup-file') as HTMLSpanElement /* prettier-ignore */
+const fileInput = document.querySelector('#file-input') as HTMLLabelElement /* prettier-ignore */
+const importBackupBtn = document.querySelector('#import-backup') as HTMLButtonElement /* prettier-ignore */
 const backupModal = document.querySelector('#backup-modal') as HTMLDivElement
-// prettier-ignore
-const closeModalBtn = document.querySelector('#close-backup-modal') as HTMLButtonElement
-// prettier-ignore
-const uploadBackupFileBtn = document.querySelector('#upload-backup-file') as HTMLButtonElement
+const closeModalBtn = document.querySelector('#close-backup-modal') as HTMLButtonElement /* prettier-ignore */
+const uploadBackupFileBtn = document.querySelector('#upload-backup-file') as HTMLButtonElement /* prettier-ignore */
 
 // General download function for JSON & CSV
 const downloadFile = (content: string, type: string, filename: string) => {

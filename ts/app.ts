@@ -1,3 +1,6 @@
+// @ts-ignore
+import { applyStoredTheme } from '../dist/theme.js'
+
 const taskInput = document.querySelector('#task-input') as HTMLInputElement
 const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
 const filterBox = document.querySelector('#filter-box') as HTMLDivElement
@@ -9,26 +12,16 @@ const statCompleted = document.querySelector('#stat-completed') as HTMLElement
 const statRemaining = document.querySelector('#stat-remaining') as HTMLElement
 const closeBoxBtn = document.querySelector('#close-box') as HTMLButtonElement
 const exportBtn = document.querySelector('#export-btn') as HTMLButtonElement
-// prettier-ignore
-const taskCharCount = document.querySelector('#task-char-count') as HTMLSpanElement
-// prettier-ignore
-const descriptionCharCount = document.querySelector('#description-char-count') as HTMLSpanElement
-// prettier-ignore
-const exportDropdown = document.querySelector('#exportDropdown') as HTMLDivElement
-// prettier-ignore
-const inputContainer = document.querySelector('#input-container') as HTMLDivElement
-// prettier-ignore
-const descriptionContainer = document.querySelector('#description-container') as HTMLDivElement
-// prettier-ignore
-const descriptionInput = document.querySelector('#description-input') as HTMLTextAreaElement
-// prettier-ignore
-const selectContainer = document.querySelector('#select-container') as HTMLDivElement
-// prettier-ignore
-const difficultyContainer = document.querySelector('#difficulty-container') as HTMLDivElement
-// prettier-ignore
-const noTaskMessage = document.querySelector('#noTask-message') as HTMLDivElement
-// prettier-ignore
-const difficultyLevels = document.querySelectorAll<HTMLButtonElement>('#difficulty-levels button')
+const taskCharCount = document.querySelector('#task-char-count') as HTMLSpanElement /* prettier-ignore */
+const descriptionCharCount = document.querySelector('#description-char-count') as HTMLSpanElement /* prettier-ignore */
+const exportDropdown = document.querySelector('#exportDropdown') as HTMLDivElement /* prettier-ignore */
+const inputContainer = document.querySelector('#input-container') as HTMLDivElement /* prettier-ignore */
+const descriptionContainer = document.querySelector('#description-container') as HTMLDivElement /* prettier-ignore */
+const descriptionInput = document.querySelector('#description-input') as HTMLTextAreaElement /* prettier-ignore */
+const selectContainer = document.querySelector('#select-container') as HTMLDivElement /* prettier-ignore */
+const difficultyContainer = document.querySelector('#difficulty-container') as HTMLDivElement /* prettier-ignore */
+const noTaskMessage = document.querySelector('#noTask-message') as HTMLDivElement /* prettier-ignore */
+const difficultyLevels = document.querySelectorAll<HTMLButtonElement>('#difficulty-levels button') /* prettier-ignore */
 
 interface Task {
 	id: number
@@ -379,10 +372,12 @@ taskInput?.addEventListener('keydown', (e) =>
 )
 taskInput?.addEventListener('input', updateTaskInputCount)
 descriptionInput?.addEventListener('input', updateTextareaCount)
+
 window.addEventListener('load', () => {
 	const loader = document.querySelector('#loader-container') as HTMLDivElement
 
 	showTodos()
+	applyStoredTheme()
 	loader.classList.add('fade-out')
 	loader.addEventListener('animationend', () => {
 		loader.classList.add('hidden')

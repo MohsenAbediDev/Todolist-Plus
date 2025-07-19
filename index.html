@@ -19,13 +19,17 @@
 		<title>TodoList</title>
 	</head>
 
-	<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+	<body class="min-h-screen primary-bg">
 		<div class="container mx-auto px-4 py-8 max-w-2xl">
 			<!-- Header -->
 			<div class="flex justify-between items-center mb-8">
 				<div>
-					<h1 class="text-4xl font-bold text-gray-800 mb-2">To-Do List</h1>
-					<p class="text-sm text-gray-600">Stay organized and productive</p>
+					<h1 class="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">
+						To-Do List
+					</h1>
+					<p class="text-sm text-gray-600 dark:text-gray-400">
+						Stay organized and productive
+					</p>
 				</div>
 
 				<!-- Action Button's -->
@@ -59,7 +63,7 @@
 						<!-- Drop Down -->
 						<div
 							id="exportDropdown"
-							class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white hidden z-10">
+							class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white dark:bg-gray-700 hidden z-10">
 							<div class="py-1">
 								<button id="export-json" class="dropdown-item">
 									Export as JSON
@@ -93,7 +97,7 @@
 					<!-- Change Theme Btn -->
 					<button
 						id="toggle-theme"
-						class="rounded cursor-pointer py-3 px-4 bg-gray-800 text-white hover:bg-gray-700">
+						class="rounded cursor-pointer py-3 px-4 bg-gray-800 dark:bg-gray-700 text-white hover:bg-gray-700">
 						<i class="far fa-lightbulb text-white"></i>
 					</button>
 				</div>
@@ -102,13 +106,15 @@
 			<!-- Filter Sectioon -->
 			<div
 				id="filter-box"
-				class="mb-4 p-4 rounded-xl shadow-lg bg-white hidden">
+				class="mb-4 p-4 rounded-xl shadow-lg bg-white dark:bg-gray-700 hidden">
 				<div class="flex flex-wrap gap-4 items-center">
 					<!-- Select Status Filter -->
 					<div class="flex items-center gap-2">
-						<span class="text-sm text-gray-600">Status:</span>
+						<span class="text-sm text-gray-600 dark:text-gray-300"
+							>Status:</span
+						>
 						<select
-							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border bg-white border-gray-200 text-gray-800">
+							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
 							<option value="all">All</option>
 							<option value="completed">Completed</option>
 							<option value="active">Remain</option>
@@ -117,10 +123,12 @@
 
 					<!-- Select Category Filter -->
 					<div class="flex items-center gap-2">
-						<span class="text-sm text-gray-600">Category:</span>
+						<span class="text-sm text-gray-600 dark:text-gray-300"
+							>Category:</span
+						>
 						<select
 							name="category-filter"
-							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border bg-white border-gray-200 text-gray-800">
+							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
 							<option value="all">All</option>
 							<option value="Personal">Personal</option>
 							<option value="Work">Work</option>
@@ -132,9 +140,11 @@
 
 					<!-- Select Difficulty Filter -->
 					<div class="flex items-center gap-2">
-						<span class="text-sm text-gray-600">Difficulty:</span>
+						<span class="text-sm text-gray-600 dark:text-gray-300"
+							>Difficulty:</span
+						>
 						<select
-							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border bg-white border-gray-200 text-gray-800">
+							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
 							<option value="all">All</option>
 							<option value="1">Level 1</option>
 							<option value="2">Level 2</option>
@@ -149,7 +159,7 @@
 			<!-- Task Input Section -->
 			<div
 				id="input-container"
-				class="mb-6 p-6 h-[100px] rounded-xl shadow-lg bg-white transition-all duration-500 ease-in-out overflow-hidden">
+				class="mb-6 p-6 h-[100px] rounded-xl shadow-lg bg-white dark:bg-gray-700 transition-all duration-500 ease-in-out overflow-hidden">
 				<div class="flex flex-col gap-3">
 					<!-- Title Input -->
 					<div class="relative w-full">
@@ -158,7 +168,7 @@
 							type="text"
 							maxlength="50"
 							placeholder="Add a new task..."
-							class="flex-1 w-full px-4 py-3 pr-14 rounded-lg border-2 bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 input-focus" />
+							class="flex-1 w-full px-4 py-3 pr-14 rounded-lg border-2 dark:border-gray-500 bg-gray-50 dark:bg-gray-600 dark:text-gray-300 dark:placeholder-gray-400 border-gray-200 text-gray-800 placeholder-gray-500 input-focus" />
 
 						<span
 							id="task-char-count"
@@ -172,7 +182,7 @@
 						<textarea
 							id="description-input"
 							placeholder="Add a description (optional)"
-							class="w-full px-4 py-3 pr-14 resize-none rounded-lg border-2 transition-all duration-300 input-focus bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500"
+							class="w-full px-4 py-3 pr-14 resize-none rounded-lg border-2 dark:border-gray-500 transition-all duration-300 input-focus bg-gray-50 dark:bg-gray-600 dark:text-gray-300 dark:placeholder-gray-400 border-gray-200 text-gray-800 placeholder-gray-500"
 							rows="3"
 							maxlength="70"></textarea>
 
@@ -183,11 +193,12 @@
 						</span>
 					</div>
 
+					<!-- Select Category -->
 					<div class="flex gap-3 hidden" id="select-container">
 						<select
 							name="category"
 							id="category"
-							class="flex-1 px-4 py-3 rounded-lg border-2 transition-all duration-300 input-focus bg-gray-50 border-gray-200 text-gray-800">
+							class="flex-1 px-4 py-3 rounded-lg border-2 dark:border-gray-500 transition-all duration-300 input-focus bg-gray-50 dark:bg-gray-600 dark:text-gray-300 dark:placeholder-gray-400 border-gray-200 text-gray-800">
 							<option value="Personal">Personal</option>
 							<option value="Work">Work</option>
 							<option value="Shopping">Shopping</option>
@@ -209,7 +220,9 @@
 						class="flex items-center justify-between hidden"
 						id="difficulty-container">
 						<div class="flex items-center gap-2">
-							<span class="text-sm text-gray-600">Difficulty:</span>
+							<span class="text-sm text-gray-600 dark:text-gray-300"
+								>Difficulty:</span
+							>
 							<div id="difficulty-levels" class="flex gap-1">
 								<button
 									class="text-xl cursor-pointer transition-colors duration-200 text-yellow-400">
@@ -260,10 +273,12 @@
 			<!-- Footer Stats -->
 			<div
 				id="footer"
-				class="mt-8 p-4 rounded-lg text-center bg-white text-gray-600 shadow-lg hidden">
+				class="mt-8 p-4 rounded-lg text-center bg-white text-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-lg hidden">
 				<div class="flex justify-center gap-8 text-sm">
 					<span>
-						<strong id="stat-total" class="text-gray-800">0</strong>
+						<strong id="stat-total" class="text-gray-800 dark:text-gray-300"
+							>0</strong
+						>
 						Total
 					</span>
 
@@ -361,7 +376,7 @@
 		<!-- Loader -->
 		<div
 			id="loader-container"
-			class="flex items-center justify-center absolute top-0 w-full h-full z-50 bg-gradient-to-br from-blue-50 to-indigo-100">
+			class="flex items-center justify-center absolute top-0 w-full h-full z-50 primary-bg dark:secondary-bg dark:dark-bg">
 			<div class="loader"></div>
 		</div>
 

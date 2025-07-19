@@ -93,7 +93,7 @@ const todoGenerator = (todo) => {
         }
     }
     tasksContainer.insertAdjacentHTML('beforeend', `
-		<div class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white overflow-hidden">
+		<div class="task-item p-4 rounded-lg shadow-md transition-all duration-300 fade-in bg-white dark:bg-gray-700 overflow-hidden">
 			<div class="flex items-center gap-3">
 				<input type="checkbox" 
 					name="task-${todo.id}" 
@@ -102,11 +102,11 @@ const todoGenerator = (todo) => {
 					${todo.isCompleted ? 'checked' : ''} />
 
 				<div class="flex flex-1 flex-col gap-y-1">
-					<span class="${`${isCompletedClass} cursor-pointer transition-all duration-300 text-gray-800 hover:text-blue-500`.trim()}">
+					<span class="${`${isCompletedClass} cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500`.trim()}">
 						${todo.title}
 					</span>
 
-					<span class="self-start text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+					<span class="self-start text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-300">
 						${todo.category}
 					</span>
 				</div>
@@ -119,9 +119,9 @@ const todoGenerator = (todo) => {
 				
 					<!-- Timer --> 
 					<div class="flex items-center flex-col-reverse sm:flex-row gap-2">
-						<span class="text-md text-gray-500">00:00:00</span>
+						<span class="text-md text-gray-500 dark:text-gray-300">00:00:00</span>
 						<button
-							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200">
+							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 dark:bg-green-600 dark:hover:bg-green-700 text-white hover:bg-green-600 transition-colors duration-200">
 							Start
 						</button>
 					</div>
@@ -129,7 +129,7 @@ const todoGenerator = (todo) => {
 					<!-- Delete Task -->
 					<button 
 						onclick="removeTask(${todo.id})"
-						class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-red-400 text-white hover:bg-red-500 transition-colors duration-200">
+						class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-red-400 dark:bg-red-700  text-white hover:bg-red-500 dark:hover:bg-red-800 transition-colors duration-200">
 						<i class="fas fa-trash text-white"></i>
 					</button>
 				</div>
@@ -138,13 +138,13 @@ const todoGenerator = (todo) => {
 			${todo.description.length > 0
         ? `
 					<div class="relative flex flex-col mt-2.5 py-2"> 
-						<i onclick="showDescription(event, ${todo.id})" class="fa-solid fa-caret-down absolute top-0 transition-all duration-400 cursor-pointer text-gray-600"></i>
+						<i onclick="showDescription(event, ${todo.id})" class="fa-solid fa-caret-down absolute top-0 transition-all duration-400 cursor-pointer text-gray-600 dark:text-gray-300"></i>
 
-						<div class="w-[96%] h-[1px] ml-5 bg-gray-300"></div>
+						<div class="w-[96%] h-[1px] ml-5 bg-gray-300 dark:bg-gray-500"></div>
 
 						<div id="desc-${todo.id}" class="flex items-center gap-1 mt-3 h-0 transition-all duration-300 overflow-hidden">
-							<span class="text-sm text-gray-700">Description:</span>  
-							<p class="text-sm text-gray-500">${todo.description}</p>
+							<span class="text-sm text-gray-700 dark:text-gray-300">Description:</span>  
+							<p class="text-sm text-gray-500 dark:text-gray-100">${todo.description}</p>
 						</div>
 					</div>`
         : ''}

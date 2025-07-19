@@ -1,9 +1,10 @@
 // tailwind.config.ts
-export default {
-    content: ['./index.html', './ts/**/*.ts'],
-    darkMode: 'class',
-    theme: {
-        extend: {},
-    },
-    plugins: [],
-};
+const config = {
+	darkMode: 'class',
+	content: ['./index.html', './ts/**/*.ts'],
+	theme: {
+		extend: {},
+	},
+	plugins: [],
+}
+export default config

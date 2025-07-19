@@ -6,9 +6,16 @@
 	display: none;
 }
 
+.primary-bg {
+	@apply bg-indigo-100 duration-500;
+}
+.dark .primary-bg {
+	@apply bg-gray-800;
+}
+
 .task-item {
 	transform: translateY(0);
-	transition: all 0.3s ease;
+	transition: all 0.17s ease;
 }
 .task-item:hover {
 	transform: translateY(-2px);
@@ -22,7 +29,7 @@
 }
 
 .dropdown-item {
-	@apply block cursor-pointer w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100;
+	@apply block cursor-pointer w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600;
 }
 
 .fade-in {

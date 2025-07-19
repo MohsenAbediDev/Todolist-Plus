@@ -29,7 +29,7 @@ const difficultyContainer = document.querySelector('#difficulty-container');
 const noTaskMessage = document.querySelector('#noTask-message');
 // prettier-ignore
 const difficultyLevels = document.querySelectorAll('#difficulty-levels button');
-const notyf = new Notyf({
+export const notyf = new Notyf({
     position: {
         x: 'right',
         y: 'top',
@@ -299,7 +299,7 @@ window.completeTask = function (e, id) {
     showAnimation();
     showTodos();
 };
-// Event's
+// Event listeners
 addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', addTaskHandler);
 closeBoxBtn === null || closeBoxBtn === void 0 ? void 0 : closeBoxBtn.addEventListener('click', closeInputBox);
 exportBtn === null || exportBtn === void 0 ? void 0 : exportBtn.addEventListener('click', openDropDown);

@@ -40,7 +40,7 @@ interface Task {
 }
 declare var Notyf: any
 
-const notyf = new Notyf({
+export const notyf = new Notyf({
 	position: {
 		x: 'right',
 		y: 'top',
@@ -370,19 +370,15 @@ difficultyLevels.forEach((level, index) => {
 	showTodos()
 }
 
-// Event's
+// Event listeners
 addTaskBtn?.addEventListener('click', addTaskHandler)
-
 closeBoxBtn?.addEventListener('click', closeInputBox)
-
 exportBtn?.addEventListener('click', openDropDown)
-
 taskInput?.addEventListener('keydown', (e) =>
 	e.key === 'Enter' ? addTaskHandler() : ''
 )
 taskInput?.addEventListener('input', updateTaskInputCount)
 descriptionInput?.addEventListener('input', updateTextareaCount)
-
 window.addEventListener('load', () => {
 	const loader = document.querySelector('#loader-container') as HTMLDivElement
 

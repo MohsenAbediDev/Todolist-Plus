@@ -8,15 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 // @ts-ignore
-import { closeDropDown, todos } from '../dist/app.js';
+import { closeDropDown, todos, notyf } from '../dist/app.js';
 // prettier-ignore
 const exportJsonBtn = document.querySelector('#export-json');
 const exportCsvBtn = document.querySelector('#export-csv');
 const exportPdfBtn = document.querySelector('#export-pdf');
+const getJsonFileInput = document.querySelector('#jsonFile');
+// prettier-ignore
+const fileSpan = document.querySelector('#show-backup-file');
+// prettier-ignore
+const fileInput = document.querySelector('#file-input');
 // prettier-ignore
 const importBackupBtn = document.querySelector('#import-backup');
 const backupModal = document.querySelector('#backup-modal');
+// prettier-ignore
 const closeModalBtn = document.querySelector('#close-backup-modal');
+// prettier-ignore
+const uploadBackupFileBtn = document.querySelector('#upload-backup-file');
 // General download function for JSON & CSV
 const downloadFile = (content, type, filename) => {
     const blob = new Blob([content], { type });
@@ -75,10 +83,10 @@ const exportAsPdf = () => __awaiter(void 0, void 0, void 0, function* () {
     doc.save('todos.pdf');
     closeDropDown();
 });
-// Import Data With JSON
-const importAsJson = () => {
+// Show Backup Modal
+const showBackupModal = () => {
     backupModal.classList.remove('hidden');
-    backupModal.classList.toggle('fade-in');
+    backupModal.classList.remove('fade-in');
     backupModal.classList.remove('fade-out');
 };
 // close Backup Modal
@@ -89,9 +97,51 @@ const closeBackupModal = () => {
         backupModal.classList.add('hidden');
     }, { once: true });
 };
+// Show File name to modal
+const getFileName = () => {
+    if (!getJsonFileInput.files) {
+        notyf.error('No files selected !');
+        return;
+    }
+    const file = getJsonFileInput === null || getJsonFileInput === void 0 ? void 0 : getJsonFileInput.files[0];
+    fileSpan.textContent = file.name;
+    fileInput.classList.add('hidden');
+    fileSpan.classList.remove('hidden');
+};
+// Import Data With JSON and Set to LocalStorage
+const importAsJson = () => {
+    if (!getJsonFileInput.files) {
+        notyf.error('No files selected !');
+        return;
+    }
+    const file = getJsonFileInput === null || getJsonFileInput === void 0 ? void 0 : getJsonFileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const target = event.target;
+        const result = target.result;
+        if (typeof result !== 'string') {
+            notyf.error('The file value is not a string!');
+            return;
+        }
+        try {
+            const jsonData = JSON.parse(result);
+            // Set datas to localstorage
+            localStorage.setItem('todos', JSON.stringify(jsonData));
+            notyf.success('Data imported successfully !');
+        }
+        catch (e) {
+            notyf.error('JSON file is not valid !');
+        }
+    };
+    fileSpan.classList.add('hidden');
+    fileInput.classList.remove('hidden');
+    reader.readAsText(file);
+};
 // Event listeners
 exportJsonBtn.addEventListener('click', exportAsJson);
 exportCsvBtn.addEventListener('click', exportAsCsv);
 exportPdfBtn.addEventListener('click', exportAsPdf);
-importBackupBtn.addEventListener('click', importAsJson);
+importBackupBtn.addEventListener('click', showBackupModal);
 closeModalBtn.addEventListener('click', closeBackupModal);
+getJsonFileInput.addEventListener('input', getFileName);
+uploadBackupFileBtn.addEventListener('click', importAsJson);

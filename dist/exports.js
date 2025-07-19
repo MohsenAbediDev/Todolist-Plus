@@ -16,6 +16,7 @@ const exportPdfBtn = document.querySelector('#export-pdf');
 // prettier-ignore
 const importBackupBtn = document.querySelector('#import-backup');
 const backupModal = document.querySelector('#backup-modal');
+const closeModalBtn = document.querySelector('#close-backup-modal');
 // General download function for JSON & CSV
 const downloadFile = (content, type, filename) => {
     const blob = new Blob([content], { type });
@@ -77,10 +78,20 @@ const exportAsPdf = () => __awaiter(void 0, void 0, void 0, function* () {
 // Import Data With JSON
 const importAsJson = () => {
     backupModal.classList.remove('hidden');
-    backupModal.classList.add('fade-in');
+    backupModal.classList.toggle('fade-in');
+    backupModal.classList.remove('fade-out');
+};
+// close Backup Modal
+const closeBackupModal = () => {
+    backupModal.classList.add('fade-out');
+    backupModal.classList.remove('fade-in');
+    backupModal.addEventListener('animationend', () => {
+        backupModal.classList.add('hidden');
+    }, { once: true });
 };
 // Event listeners
 exportJsonBtn.addEventListener('click', exportAsJson);
 exportCsvBtn.addEventListener('click', exportAsCsv);
 exportPdfBtn.addEventListener('click', exportAsPdf);
 importBackupBtn.addEventListener('click', importAsJson);
+closeModalBtn.addEventListener('click', closeBackupModal);

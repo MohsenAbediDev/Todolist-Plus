@@ -8,6 +8,9 @@ const exportPdfBtn = document.querySelector('#export-pdf') as HTMLButtonElement
 // prettier-ignore
 const importBackupBtn = document.querySelector('#import-backup') as HTMLButtonElement
 const backupModal = document.querySelector('#backup-modal') as HTMLDivElement
+const closeModalBtn = document.querySelector(
+	'#close-backup-modal'
+) as HTMLButtonElement
 
 // General download function for JSON & CSV
 const downloadFile = (content: string, type: string, filename: string) => {
@@ -82,7 +85,21 @@ const exportAsPdf = async () => {
 // Import Data With JSON
 const importAsJson = () => {
 	backupModal.classList.remove('hidden')
-	backupModal.classList.add('fade-in')
+	backupModal.classList.toggle('fade-in')
+	backupModal.classList.remove('fade-out')
+}
+// close Backup Modal
+const closeBackupModal = () => {
+	backupModal.classList.add('fade-out')
+	backupModal.classList.remove('fade-in')
+
+	backupModal.addEventListener(
+		'animationend',
+		() => {
+			backupModal.classList.add('hidden')
+		},
+		{ once: true }
+	)
 }
 
 // Event listeners
@@ -90,3 +107,4 @@ exportJsonBtn.addEventListener('click', exportAsJson)
 exportCsvBtn.addEventListener('click', exportAsCsv)
 exportPdfBtn.addEventListener('click', exportAsPdf)
 importBackupBtn.addEventListener('click', importAsJson)
+closeModalBtn.addEventListener('click', closeBackupModal)

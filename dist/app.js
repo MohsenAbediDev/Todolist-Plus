@@ -1,4 +1,3 @@
-"use strict";
 const taskInput = document.querySelector('#task-input');
 const addTaskBtn = document.querySelector('#add-task');
 const filterBox = document.querySelector('#filter-box');
@@ -37,7 +36,7 @@ const notyf = new Notyf({
     },
 });
 const storedTodos = localStorage.getItem('todos');
-let todos = storedTodos ? JSON.parse(storedTodos) : [];
+export let todos = storedTodos ? JSON.parse(storedTodos) : [];
 const addTaskHandler = () => {
     // prettier-ignore
     const levelsSelected = document.querySelectorAll('#difficulty-levels button.text-yellow-400');
@@ -209,7 +208,7 @@ const openDropDown = () => {
     }
 };
 // Close DropDown Handler
-const closeDropDown = () => {
+export const closeDropDown = () => {
     exportDropdown.classList.add('hidden');
     exportDropdown.classList.remove('show');
     document.removeEventListener('click', handleOutsideClick);

@@ -1,8 +1,13 @@
-const exportJsonBtn = document.querySelector('#exprt-json') as HTMLButtonElement
-const exportCsvBtn = document.querySelector('#exprt-csv') as HTMLButtonElement
-const exportPdfBtn = document.querySelector('#exprt-pdf') as HTMLButtonElement
+// @ts-ignore
+import { closeDropDown, todos } from '../dist/app.js'
 
-const datas = JSON.parse(localStorage.getItem('todos') || '[]')
+// prettier-ignore
+const exportJsonBtn = document.querySelector('#export-json') as HTMLButtonElement
+const exportCsvBtn = document.querySelector('#export-csv') as HTMLButtonElement
+const exportPdfBtn = document.querySelector('#export-pdf') as HTMLButtonElement
+// prettier-ignore
+const importBackupBtn = document.querySelector('#import-backup') as HTMLButtonElement
+const backupModal = document.querySelector('#backup-modal') as HTMLDivElement
 
 // General download function for JSON & CSV
 const downloadFile = (content: string, type: string, filename: string) => {
@@ -15,18 +20,19 @@ const downloadFile = (content: string, type: string, filename: string) => {
 
 // Export to JSON
 const exportAsJson = () => {
-	const jsonStr = JSON.stringify(datas, null, 2)
+	const jsonStr = JSON.stringify(todos, null, 2)
 	downloadFile(jsonStr, 'application/json', 'todos.json')
+	closeDropDown()
 }
 
 // Export to CSV
 const exportAsCsv = () => {
-	if (datas.length === 0) return
+	if (todos.length === 0) return
 
-	const headers = Object.keys(datas[0])
+	const headers = Object.keys(todos[0])
 	const csvRows = [
 		headers.join(','), // header row
-		...datas.map((data: any) =>
+		...todos.map((data: any) =>
 			headers
 				.map((h) => `"${(data[h] ?? '').toString().replace(/"/g, '""')}"`)
 				.join(',')
@@ -35,18 +41,19 @@ const exportAsCsv = () => {
 
 	const csvContent = csvRows.join('\n')
 	downloadFile(csvContent, 'text/csv', 'todos.csv')
+	closeDropDown()
 }
 
 // Export to PDF using jsPDF
 const exportAsPdf = async () => {
-	if (datas.length === 0) return
+	if (todos.length === 0) return
 
 	// @ts-ignore
 	const { jsPDF } = window.jspdf
 	const doc = new jsPDF()
 	let y = 10
 
-	datas.forEach((task: any, index: number) => {
+	todos.forEach((task: any, index: number) => {
 		doc.text(`Task ${index + 1}`, 10, y)
 		y += 7
 
@@ -69,9 +76,17 @@ const exportAsPdf = async () => {
 	})
 
 	doc.save('todos.pdf')
+	closeDropDown()
+}
+
+// Import Data With JSON
+const importAsJson = () => {
+	backupModal.classList.remove('hidden')
+	backupModal.classList.add('fade-in')
 }
 
 // Event listeners
 exportJsonBtn.addEventListener('click', exportAsJson)
 exportCsvBtn.addEventListener('click', exportAsCsv)
 exportPdfBtn.addEventListener('click', exportAsPdf)
+importBackupBtn.addEventListener('click', importAsJson)

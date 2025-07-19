@@ -48,7 +48,7 @@ const notyf = new Notyf({
 })
 
 const storedTodos = localStorage.getItem('todos')
-let todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
+export let todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
 
 const addTaskHandler = () => {
 	// prettier-ignore
@@ -254,7 +254,7 @@ const openDropDown = () => {
 	}
 }
 // Close DropDown Handler
-const closeDropDown = () => {
+export const closeDropDown = () => {
 	exportDropdown.classList.add('hidden')
 	exportDropdown.classList.remove('show')
 

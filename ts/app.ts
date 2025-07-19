@@ -1,5 +1,7 @@
 // @ts-ignore
 import { applyStoredTheme } from '../dist/theme.js'
+// @ts-ignore
+import { showTimer } from '../dist/timer.js'
 
 const taskInput = document.querySelector('#task-input') as HTMLInputElement
 const addTaskBtn = document.querySelector('#add-task') as HTMLButtonElement
@@ -23,12 +25,13 @@ const difficultyContainer = document.querySelector('#difficulty-container') as H
 const noTaskMessage = document.querySelector('#noTask-message') as HTMLDivElement /* prettier-ignore */
 const difficultyLevels = document.querySelectorAll<HTMLButtonElement>('#difficulty-levels button') /* prettier-ignore */
 
-interface Task {
+export interface Task {
 	id: number
 	title: string
 	description: string
 	category: string
 	level: number
+	timer: { elapsedTime: number; isRunning: boolean }
 	isCompleted: boolean
 }
 declare var Notyf: any
@@ -77,6 +80,7 @@ const addTaskHandler = () => {
 			description: descriptionInput.value,
 			category: category.value,
 			level: levelsSelected.length,
+			timer: { elapsedTime: 0, isRunning: false },
 			isCompleted: false,
 		}
 		todos.push(newTodo)
@@ -149,9 +153,12 @@ const todoGenerator = (todo: Task) => {
 				
 					<!-- Timer --> 
 					<div class="flex items-center flex-col-reverse sm:flex-row gap-2">
-						<span class="text-md text-gray-500 dark:text-gray-300">00:00:00</span>
+						<span id="timer-${
+							todo.id
+						}" class="text-md text-gray-500 dark:text-gray-300">00:00:00</span>
 						<button
-							class="rounded-sm whitespace-nowrap cursor-pointer px-3 py-2 bg-green-500 dark:bg-green-600 dark:hover:bg-green-700 text-white hover:bg-green-600 transition-colors duration-200">
+							onclick="startTimer(event, ${todo.id})"
+							class="rounded-sm whitespace-nowrap cursor-pointer outline-none px-3 py-2 start-timer text-white transition-colors duration-200">
 							Start
 						</button>
 					</div>
@@ -378,6 +385,8 @@ window.addEventListener('load', () => {
 
 	showTodos()
 	applyStoredTheme()
+	showTimer()
+
 	loader.classList.add('fade-out')
 	loader.addEventListener('animationend', () => {
 		loader.classList.add('hidden')

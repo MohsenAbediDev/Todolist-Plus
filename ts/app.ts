@@ -50,6 +50,18 @@ const notyf = new Notyf({
 const storedTodos = localStorage.getItem('todos')
 export let todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
 
+// Generate unique id fot tasks
+function generateUniqueNumericId(todos: { id: number }[]): number {
+	const existingIds = new Set(todos.map((t) => t.id))
+	let id: number
+
+	do {
+		id = Math.floor(Math.random() * 1_000_000)
+	} while (existingIds.has(id))
+
+	return id
+}
+
 const addTaskHandler = () => {
 	// prettier-ignore
 	const levelsSelected = document.querySelectorAll<HTMLButtonElement>('#difficulty-levels button.text-yellow-400')
@@ -67,7 +79,7 @@ const addTaskHandler = () => {
 
 	if (value) {
 		const newTodo = {
-			id: todos.length + 1,
+			id: generateUniqueNumericId(todos),
 			title: value,
 			description: descriptionInput.value,
 			category: category.value,

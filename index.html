@@ -155,57 +155,87 @@
 				</div>
 			</div>
 
-			<!-- Filter Sectioon -->
+			<!-- Filter Section -->
 			<div
 				id="filter-box"
-				class="mb-4 p-4 rounded-xl shadow-lg bg-white dark:bg-gray-700 hidden">
-				<div class="flex flex-wrap gap-4 items-center">
-					<!-- Select Status Filter -->
-					<div class="flex items-center gap-2">
-						<span class="text-sm text-gray-600 dark:text-gray-300">
-							Status:
-						</span>
-						<select
-							name="status-filter"
-							class="whitespace-nowrap focus:outline-1 focus:outline-[var(--primary-color)] rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
-							<option value="all">All</option>
-							<option value="completed">Completed</option>
-							<option value="active">Remain</option>
-						</select>
-					</div>
+				class="flex flex-wrap gap-4 items-center mb-4 hidden">
+				<!-- Select Category Filter -->
+				<div
+					class="flex flex-1 items-center gap-2 shadow-lg bg-white dark:bg-gray-700 p-3 rounded">
+					<span class="text-sm text-gray-600 dark:text-gray-300">
+						Category:
+					</span>
+					<select
+						name="category-filter"
+						class="whitespace-nowrap focus:outline-1 focus:outline-[var(--primary-color)] rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
+						<option value="all">All</option>
+						<option value="Personal">Personal</option>
+						<option value="Work">Work</option>
+						<option value="Shopping">Shopping</option>
+						<option value="Health">Health</option>
+						<option value="Education">Education</option>
+					</select>
+				</div>
 
-					<!-- Select Category Filter -->
-					<div class="flex items-center gap-2">
-						<span class="text-sm text-gray-600 dark:text-gray-300">
-							Category:
-						</span>
-						<select
-							name="category-filter"
-							class="whitespace-nowrap focus:outline-1 focus:outline-[var(--primary-color)] rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
-							<option value="all">All</option>
-							<option value="Personal">Personal</option>
-							<option value="Work">Work</option>
-							<option value="Shopping">Shopping</option>
-							<option value="Health">Health</option>
-							<option value="Education">Education</option>
-						</select>
-					</div>
+				<!-- Select Difficulty Filter -->
+				<div
+					class="flex flex-1 items-center gap-2 shadow-lg bg-white dark:bg-gray-700 p-3 rounded">
+					<span class="text-sm text-gray-600 dark:text-gray-300">
+						Difficulty:
+					</span>
+					<select
+						name="difficulty-filter"
+						class="whitespace-nowrap focus:outline-1 focus:outline-[var(--primary-color)] rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
+						<option value="all">All</option>
+						<option value="1">Level 1</option>
+						<option value="2">Level 2</option>
+						<option value="3">Level 3</option>
+						<option value="4">Level 4</option>
+						<option value="5">Level 5</option>
+					</select>
+				</div>
 
-					<!-- Select Difficulty Filter -->
-					<div class="flex items-center gap-2">
-						<span class="text-sm text-gray-600 dark:text-gray-300">
-							Difficulty:
-						</span>
-						<select
-							name="difficulty-filter"
-							class="whitespace-nowrap focus:outline-1 focus:outline-[var(--primary-color)] rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
-							<option value="all">All</option>
-							<option value="1">Level 1</option>
-							<option value="2">Level 2</option>
-							<option value="3">Level 3</option>
-							<option value="4">Level 4</option>
-							<option value="5">Level 5</option>
-						</select>
+				<!-- Sort Order -->
+				<div
+					class="relative flex flex-1 items-center gap-2 shadow-lg bg-white dark:bg-gray-700 p-3 rounded">
+					<button
+						id="sort-toggle-btn"
+						type="button"
+						class="inline-flex justify-between items-center gap-2 w-full px-4 py-2 cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm focus:outline-none">
+						Sort by
+						<i class="fa-solid fa-chevron-down text-xs"></i>
+					</button>
+
+					<!-- Dropdown menu -->
+					<div
+						id="sort-dropdown"
+						class="absolute right-1 top-15 mt-2 w-48 rounded-lg shadow-lg bg-white dark:bg-gray-700 hidden z-10">
+						<div class="py-1 text-sm text-gray-700 dark:text-gray-100">
+							<button
+								data-sort="difficulty-asc"
+								class="flex items-center cursor-pointer w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+								<i class="fa-solid fa-layer-group mr-2"></i> Difficulty
+								<i class="fa-solid fa-arrow-up ml-auto text-xs"></i>
+							</button>
+							<button
+								data-sort="difficulty-desc"
+								class="flex items-center cursor-pointer w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+								<i class="fa-solid fa-layer-group mr-2"></i> Difficulty
+								<i class="fa-solid fa-arrow-down ml-auto text-xs"></i>
+							</button>
+							<button
+								data-sort="date-asc"
+								class="flex items-center cursor-pointer w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+								<i class="fa-solid fa-calendar-days mr-2"></i> Date Added
+								<i class="fa-solid fa-arrow-up ml-auto text-xs"></i>
+							</button>
+							<button
+								data-sort="date-desc"
+								class="flex items-center cursor-pointer w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+								<i class="fa-solid fa-calendar-days mr-2"></i> Date Added
+								<i class="fa-solid fa-arrow-down ml-auto text-xs"></i>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -330,20 +360,29 @@
 				class="mt-8 p-4 rounded-lg text-center bg-white text-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-lg hidden">
 				<div class="flex justify-center gap-8 text-sm">
 					<span>
-						<strong id="stat-total" class="text-gray-800 dark:text-gray-300"
-							>0</strong
-						>
-						Total
+						<strong id="stat-total" class="text-gray-800 dark:text-gray-300">
+							0
+						</strong>
+						<span
+							class="hover:text-[var(--primary-color)] cursor-pointer duration-200">
+							Total
+						</span>
 					</span>
 
 					<span>
 						<strong id="stat-completed" class="text-green-500">0</strong>
-						Completed
+						<span
+							class="hover:text-[var(--primary-color)] cursor-pointer duration-200">
+							Completed
+						</span>
 					</span>
 
 					<span>
 						<strong id="stat-remaining" class="text-blue-500">0</strong>
-						Remaining
+						<span
+							class="hover:text-[var(--primary-color)] cursor-pointer duration-200">
+							Remaining
+						</span>
 					</span>
 				</div>
 			</div>

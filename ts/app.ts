@@ -14,6 +14,8 @@ const statCompleted = document.querySelector('#stat-completed') as HTMLElement
 const statRemaining = document.querySelector('#stat-remaining') as HTMLElement
 const closeBoxBtn = document.querySelector('#close-box') as HTMLButtonElement
 const exportBtn = document.querySelector('#export-btn') as HTMLButtonElement
+const sortDropdown = document.querySelector('#sort-dropdown') as HTMLDivElement
+const sortToggleBtn = document.querySelector('#sort-toggle-btn') as HTMLButtonElement /* prettier-ignore */
 const taskCharCount = document.querySelector('#task-char-count') as HTMLSpanElement /* prettier-ignore */
 const descriptionCharCount = document.querySelector('#description-char-count') as HTMLSpanElement /* prettier-ignore */
 const exportDropdown = document.querySelector('#exportDropdown') as HTMLDivElement /* prettier-ignore */
@@ -252,7 +254,7 @@ const closeInputBox = () => {
 	difficultyContainer.classList.add('hidden')
 }
 
-// Open DropDown Handler
+// Open Export DropDown Handler
 const openDropDown = () => {
 	const isCurrentlyHidden = exportDropdown.classList.contains('hidden')
 
@@ -260,23 +262,51 @@ const openDropDown = () => {
 		exportDropdown.classList.remove('hidden')
 		exportDropdown.classList.add('show')
 
-		document.addEventListener('click', handleOutsideClick)
+		document.addEventListener('click', handleOutsideExportClick)
 	} else {
 		closeDropDown()
 	}
 }
-// Close DropDown Handler
+// Close Export DropDown Handler
 export const closeDropDown = () => {
 	exportDropdown.classList.add('hidden')
 	exportDropdown.classList.remove('show')
 
-	document.removeEventListener('click', handleOutsideClick)
+	document.removeEventListener('click', handleOutsideExportClick)
 }
-const handleOutsideClick = (event: MouseEvent) => {
+const handleOutsideExportClick = (event: MouseEvent) => {
 	const target = event.target as Node
 
 	if (!exportDropdown.contains(target) && !exportBtn.contains(target)) {
 		closeDropDown()
+	}
+}
+
+// Open Sort DropDown Handler
+const openSortDropdown = () => {
+	const isCurrentlyHidden = sortDropdown.classList.contains('hidden')
+
+	if (isCurrentlyHidden) {
+		sortDropdown.classList.remove('hidden')
+		sortDropdown.classList.add('show')
+
+		document.addEventListener('click', handleOutsideSortClick)
+	} else {
+		closeSortDropDown()
+	}
+}
+// Close Sort DropDown Handler
+export const closeSortDropDown = () => {
+	sortDropdown.classList.add('hidden')
+	sortDropdown.classList.remove('show')
+
+	document.removeEventListener('click', handleOutsideSortClick)
+}
+const handleOutsideSortClick = (event: MouseEvent) => {
+	const target = event.target as Node
+
+	if (!sortDropdown.contains(target) && !sortToggleBtn.contains(target)) {
+		closeSortDropDown()
 	}
 }
 
@@ -374,6 +404,7 @@ difficultyLevels.forEach((level, index) => {
 addTaskBtn?.addEventListener('click', addTaskHandler)
 closeBoxBtn?.addEventListener('click', closeInputBox)
 exportBtn?.addEventListener('click', openDropDown)
+sortToggleBtn?.addEventListener('click', openSortDropdown)
 taskInput?.addEventListener('keydown', (e) =>
 	e.key === 'Enter' ? addTaskHandler() : ''
 )

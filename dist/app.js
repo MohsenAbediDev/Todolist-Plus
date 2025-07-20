@@ -13,6 +13,8 @@ const statCompleted = document.querySelector('#stat-completed');
 const statRemaining = document.querySelector('#stat-remaining');
 const closeBoxBtn = document.querySelector('#close-box');
 const exportBtn = document.querySelector('#export-btn');
+const sortDropdown = document.querySelector('#sort-dropdown');
+const sortToggleBtn = document.querySelector('#sort-toggle-btn'); /* prettier-ignore */
 const taskCharCount = document.querySelector('#task-char-count'); /* prettier-ignore */
 const descriptionCharCount = document.querySelector('#description-char-count'); /* prettier-ignore */
 const exportDropdown = document.querySelector('#exportDropdown'); /* prettier-ignore */
@@ -200,28 +202,52 @@ const closeInputBox = () => {
     difficultyContainer.classList.remove('show');
     difficultyContainer.classList.add('hidden');
 };
-// Open DropDown Handler
+// Open Export DropDown Handler
 const openDropDown = () => {
     const isCurrentlyHidden = exportDropdown.classList.contains('hidden');
     if (isCurrentlyHidden) {
         exportDropdown.classList.remove('hidden');
         exportDropdown.classList.add('show');
-        document.addEventListener('click', handleOutsideClick);
+        document.addEventListener('click', handleOutsideExportClick);
     }
     else {
         closeDropDown();
     }
 };
-// Close DropDown Handler
+// Close Export DropDown Handler
 export const closeDropDown = () => {
     exportDropdown.classList.add('hidden');
     exportDropdown.classList.remove('show');
-    document.removeEventListener('click', handleOutsideClick);
+    document.removeEventListener('click', handleOutsideExportClick);
 };
-const handleOutsideClick = (event) => {
+const handleOutsideExportClick = (event) => {
     const target = event.target;
     if (!exportDropdown.contains(target) && !exportBtn.contains(target)) {
         closeDropDown();
+    }
+};
+// Open Sort DropDown Handler
+const openSortDropdown = () => {
+    const isCurrentlyHidden = sortDropdown.classList.contains('hidden');
+    if (isCurrentlyHidden) {
+        sortDropdown.classList.remove('hidden');
+        sortDropdown.classList.add('show');
+        document.addEventListener('click', handleOutsideSortClick);
+    }
+    else {
+        closeSortDropDown();
+    }
+};
+// Close Sort DropDown Handler
+export const closeSortDropDown = () => {
+    sortDropdown.classList.add('hidden');
+    sortDropdown.classList.remove('show');
+    document.removeEventListener('click', handleOutsideSortClick);
+};
+const handleOutsideSortClick = (event) => {
+    const target = event.target;
+    if (!sortDropdown.contains(target) && !sortToggleBtn.contains(target)) {
+        closeSortDropDown();
     }
 };
 // Limit Char Count For Task input
@@ -299,6 +325,7 @@ window.completeTask = function (e, id) {
 addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListener('click', addTaskHandler);
 closeBoxBtn === null || closeBoxBtn === void 0 ? void 0 : closeBoxBtn.addEventListener('click', closeInputBox);
 exportBtn === null || exportBtn === void 0 ? void 0 : exportBtn.addEventListener('click', openDropDown);
+sortToggleBtn === null || sortToggleBtn === void 0 ? void 0 : sortToggleBtn.addEventListener('click', openSortDropdown);
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('input', updateTaskInputCount);
 descriptionInput === null || descriptionInput === void 0 ? void 0 : descriptionInput.addEventListener('input', updateTextareaCount);

@@ -162,6 +162,7 @@ const todoGenerator = (todo: Task) => {
 						}" class="text-md text-gray-500 dark:text-gray-300">00:00:00</span>
 						<button
 							onclick="startTimer(event, ${todo.id})"
+							${todo.isCompleted ? 'disabled' : ''}
 							class="rounded-sm whitespace-nowrap cursor-pointer outline-none px-3 py-2 start-timer text-white transition-colors duration-200">
 							Start
 						</button>
@@ -391,7 +392,7 @@ difficultyLevels.forEach((level, index) => {
 	if (newTodo) {
 		newTodo.title = newTitle
 
-		// ذخیره در localStorage
+		// Save to localStorage
 		localStorage.setItem('todos', JSON.stringify(todos))
 	}
 

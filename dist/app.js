@@ -129,6 +129,7 @@ const todoGenerator = (todo) => {
 						<span id="timer-${todo.id}" class="text-md text-gray-500 dark:text-gray-300">00:00:00</span>
 						<button
 							onclick="startTimer(event, ${todo.id})"
+							${todo.isCompleted ? 'disabled' : ''}
 							class="rounded-sm whitespace-nowrap cursor-pointer outline-none px-3 py-2 start-timer text-white transition-colors duration-200">
 							Start
 						</button>
@@ -316,7 +317,7 @@ window.saveEditedTitle = function (input, taskId) {
     const newTodo = todos.find((t) => t.id === taskId);
     if (newTodo) {
         newTodo.title = newTitle;
-        // ذخیره در localStorage
+        // Save to localStorage
         localStorage.setItem('todos', JSON.stringify(todos));
     }
     // Replace input with new span

@@ -138,9 +138,11 @@ const todoGenerator = (todo: Task) => {
 					${todo.isCompleted ? 'checked' : ''} />
 
 				<div class="flex flex-1 flex-col gap-y-1">
-					<span class="${`${isCompletedClass} cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500`.trim()}">
-						${todo.title}
+					<span class="${`${isCompletedClass} cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500`.trim()}"
+							onclick="editTask(event, ${todo.id})">
+							${todo.title}
 					</span>
+
 
 					<span class="self-start text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-300">
 						${todo.category}
@@ -349,6 +351,59 @@ difficultyLevels.forEach((level, index) => {
 		})
 	})
 })
+
+// Edit Task Handler
+;(window as any).editTask = function (event: Event, taskId: number) {
+	const span = event.target as HTMLSpanElement
+	const currentTitle = span.textContent
+
+	const input = document.createElement('input') as HTMLInputElement
+	input.type = 'text'
+	input.value = (currentTitle ?? '').trim()
+	input.className =
+		'flex-1 w-full px-2 py-1 pr-14 rounded-lg border-1 dark:border-gray-500 bg-gray-50 dark:bg-gray-600 dark:text-gray-300 dark:placeholder-gray-400 border-gray-200 text-gray-800 placeholder-gray-500 input-focus'
+	input.addEventListener('blur', () =>
+		(window as any).saveEditedTitle(input, taskId)
+	)
+
+	input.addEventListener('keydown', (e) => {
+		if (e.key === 'Enter') {
+			input.blur() // Trigger blur to save
+		}
+	})
+
+	span.replaceWith(input)
+	input.focus()
+}
+;(window as any).saveEditedTitle = function (
+	input: HTMLInputElement,
+	taskId: number
+) {
+	const newTitle = input.value.trim()
+
+	if (newTitle.length === 0) {
+		notyf.error('Title cannot be empty !')
+		input.focus()
+		return
+	}
+
+	const newTodo = todos.find((t) => t.id === taskId)
+	if (newTodo) {
+		newTodo.title = newTitle
+
+		// ذخیره در localStorage
+		localStorage.setItem('todos', JSON.stringify(todos))
+	}
+
+	// Replace input with new span
+	const span = document.createElement('span')
+	span.textContent = newTitle
+	span.className =
+		'cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500'
+	span.onclick = (e) => (window as any).editTask(e, taskId)
+
+	input.replaceWith(span)
+}
 
 // Remove Task Handler
 ;(window as any).removeTask = function (id: number) {

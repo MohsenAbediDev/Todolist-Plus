@@ -35,7 +35,7 @@
 		<title>TodoList Plus</title>
 	</head>
 
-	<body class="min-h-screen primary-bg">
+	<body class="min-h-screen main-bg">
 		<div class="container mx-auto px-4 py-8 max-w-2xl">
 			<!-- Header -->
 			<div class="flex justify-between items-center mb-8">
@@ -54,7 +54,7 @@
 					<div class="relative">
 						<button
 							id="export-btn"
-							class="rounded flex items-center whitespace-nowrap cursor-pointer py-3 px-4 bg-[#3b82f6] text-white transition-all duration-300">
+							class="rounded flex items-center whitespace-nowrap cursor-pointer py-3 px-4 bg-primary text-white transition-all duration-300">
 							<!-- Download Icon -->
 							<span
 								role="img"
@@ -97,17 +97,53 @@
 						</div>
 					</div>
 
-					<!-- Color Input -->
-					<div class="relative group">
+					<!-- Color Picker Dropdown -->
+					<div class="relative">
 						<button
-							class="rounded text-white bg-[#3b82f6] cursor-pointer py-3 px-4 transition-all duration-300">
+							id="color-picker-btn"
+							class="rounded text-white bg-primary cursor-pointer py-3 px-4 transition-all duration-300">
 							<i class="fas fa-palette text-white"></i>
 						</button>
 
-						<input
-							type="color"
-							class="absolute opacity-0 inset-0 w-full h-full cursor-pointer"
-							value="#377ae6" />
+						<!-- Drop Down -->
+						<div
+							id="color-drop-down"
+							class="absolute hidden -right-16 mt-2 w-48 rounded-lg shadow-lg bg-white dark:bg-gray-700 z-10 p-3">
+							<div class="flex gap-2 flex-wrap">
+								<div
+									class="w-8 h-8 rounded cursor-pointer bg-blue-500"
+									onclick="applyPrimaryColors('#3b82f6','#2563eb','#93c5fd')"
+									title="Blue"></div>
+								<div
+									class="w-8 h-8 rounded cursor-pointer bg-green-500"
+									onclick="applyPrimaryColors('#22c55e','#16a34a','#86efac')"
+									title="Green"></div>
+								<div
+									class="w-8 h-8 rounded cursor-pointer bg-red-500"
+									onclick="applyPrimaryColors('#ef4444','#dc2626','#fca5a5')"
+									title="Red"></div>
+								<div
+									class="w-8 h-8 rounded cursor-pointer bg-purple-500"
+									onclick="applyPrimaryColors('#a855f7','#9333ea','#d8b4fe')"
+									title="Purple"></div>
+								<div
+									class="w-8 h-8 rounded cursor-pointer bg-indigo-500"
+									onclick="applyPrimaryColors('#6366f1','#4f46e5','#a5b4fc')"
+									title="Indigo"></div>
+								<div
+									class="w-8 h-8 rounded cursor-pointer bg-teal-500"
+									onclick="applyPrimaryColors('#14b8a6','#0d9488','#99f6e4')"
+									title="Teal"></div>
+								<div
+									class="w-8 h-8 rounded cursor-pointer bg-rose-500"
+									onclick="applyPrimaryColors('#f43f5e','#e11d48','#fda4af')"
+									title="Rose"></div>
+								<div
+									class="w-8 h-8 rounded cursor-pointer bg-amber-500"
+									onclick="applyPrimaryColors('#f59e0b','#d97706','#fde68a')"
+									title="Amber"></div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Change Theme Btn -->
@@ -130,7 +166,8 @@
 							Status:
 						</span>
 						<select
-							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
+							name="status-filter"
+							class="whitespace-nowrap focus:outline-1 focus:outline-[var(--primary-color)] rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
 							<option value="all">All</option>
 							<option value="completed">Completed</option>
 							<option value="active">Remain</option>
@@ -144,7 +181,7 @@
 						</span>
 						<select
 							name="category-filter"
-							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
+							class="whitespace-nowrap focus:outline-1 focus:outline-[var(--primary-color)] rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
 							<option value="all">All</option>
 							<option value="Personal">Personal</option>
 							<option value="Work">Work</option>
@@ -160,7 +197,8 @@
 							Difficulty:
 						</span>
 						<select
-							class="whitespace-nowrap focus:outline-1 focus:outline-blue-500 rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
+							name="difficulty-filter"
+							class="whitespace-nowrap focus:outline-1 focus:outline-[var(--primary-color)] rounded cursor-pointer px-3 py-1.5 border dark:border-gray-500 bg-white dark:bg-gray-700 border-gray-200 text-gray-800 dark:text-gray-300">
 							<option value="all">All</option>
 							<option value="1">Level 1</option>
 							<option value="2">Level 2</option>
@@ -225,7 +263,7 @@
 						<!-- Add Task Button -->
 						<button
 							id="add-task"
-							class="rounded flex items-center gap-2 whitespace-nowrap cursor-pointer px-6 py-3 bg-blue-500 text-white hover:bg-blue-600 transition-all font-medium">
+							class="rounded flex items-center gap-2 whitespace-nowrap cursor-pointer px-6 py-3 bg-primary text-white hover:bg-primary-hover dark:hover:bg-primary-hover transition-all font-medium">
 							<i class="fas fa-plus"></i>
 							Add Task
 						</button>
@@ -378,7 +416,7 @@
 							<button
 								type="submit"
 								id="upload-backup-file"
-								class="w-full cursor-pointer text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+								class="w-full cursor-pointer text-white bg-primary hover:bg-primary-hover focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary dark:hover:bg-primary-hover">
 								Confirm and upload
 							</button>
 						</form>
@@ -390,7 +428,7 @@
 		<!-- Loader -->
 		<div
 			id="loader-container"
-			class="flex items-center justify-center absolute top-0 w-full h-full z-50 primary-bg dark:secondary-bg dark:dark-bg">
+			class="flex items-center justify-center absolute top-0 w-full h-full z-50 main-bg dark:secondary-bg dark:dark-bg">
 			<div class="loader"></div>
 		</div>
 

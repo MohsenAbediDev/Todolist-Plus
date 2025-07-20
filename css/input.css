@@ -2,15 +2,26 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Global Styles */
+:root {
+	--primary-color: #3b82f6;
+	--primary-color-hover: #0744c7;
+}
 ::-webkit-scrollbar {
 	display: none;
 }
 
-.primary-bg {
+.main-bg {
 	@apply bg-indigo-100 duration-500;
 }
-.dark .primary-bg {
+.dark .main-bg {
 	@apply bg-gray-800;
+}
+
+.bg-primary {
+	background-color: var(--primary-color);
+}
+.bg-primary-hover {
+	background-color: var(--primary-color-hover);
 }
 
 .task-item {
@@ -25,13 +36,13 @@
 	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 .start-timer {
-	@apply bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700
+	@apply bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700;
 }
 .stop-timer {
-	@apply bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800
+	@apply bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-800;
 }
 .input-focus {
-	@apply focus:outline-none focus:ring-2 focus:ring-blue-500;
+	@apply focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)];
 }
 
 .dropdown-item {

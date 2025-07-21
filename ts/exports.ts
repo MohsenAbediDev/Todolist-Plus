@@ -24,63 +24,74 @@ const downloadFile = (content: string, type: string, filename: string) => {
 
 // Export to JSON
 const exportAsJson = () => {
-	const jsonStr = JSON.stringify(todos, null, 2)
-	downloadFile(jsonStr, 'application/json', 'todos.json')
-	closeDropDown()
+	if (todos.length > 0) {
+		const jsonStr = JSON.stringify(todos, null, 2)
+		downloadFile(jsonStr, 'application/json', 'todos.json')
+		closeDropDown()
+	} else {
+		notyf.error('Please add task first !')
+		closeDropDown()
+	}
 }
 
 // Export to CSV
 const exportAsCsv = () => {
-	if (todos.length === 0) return
+	if (todos.length > 0) {
+		const headers = Object.keys(todos[0])
+		const csvRows = [
+			headers.join(','), // header row
+			...todos.map((data: any) =>
+				headers
+					.map((h) => `"${(data[h] ?? '').toString().replace(/"/g, '""')}"`)
+					.join(',')
+			),
+		]
 
-	const headers = Object.keys(todos[0])
-	const csvRows = [
-		headers.join(','), // header row
-		...todos.map((data: any) =>
-			headers
-				.map((h) => `"${(data[h] ?? '').toString().replace(/"/g, '""')}"`)
-				.join(',')
-		),
-	]
-
-	const csvContent = csvRows.join('\n')
-	downloadFile(csvContent, 'text/csv', 'todos.csv')
-	closeDropDown()
+		const csvContent = csvRows.join('\n')
+		downloadFile(csvContent, 'text/csv', 'todos.csv')
+		closeDropDown()
+	} else {
+		notyf.error('Please add task first !')
+		closeDropDown()
+	}
 }
 
 // Export to PDF using jsPDF
 const exportAsPdf = async () => {
-	if (todos.length === 0) return
+	if (todos.length > 0) {
+		// @ts-ignore
+		const { jsPDF } = window.jspdf
+		const doc = new jsPDF()
+		let y = 10
 
-	// @ts-ignore
-	const { jsPDF } = window.jspdf
-	const doc = new jsPDF()
-	let y = 10
+		todos.forEach((task: any, index: number) => {
+			doc.text(`Task ${index + 1}`, 10, y)
+			y += 7
 
-	todos.forEach((task: any, index: number) => {
-		doc.text(`Task ${index + 1}`, 10, y)
-		y += 7
+			for (const key in task) {
+				const val =
+					typeof task[key] === 'boolean'
+						? task[key]
+							? '✓'
+							: '✗'
+						: String(task[key])
+				doc.text(`${key}: ${val}`, 15, y)
+				y += 6
+			}
 
-		for (const key in task) {
-			const val =
-				typeof task[key] === 'boolean'
-					? task[key]
-						? '✓'
-						: '✗'
-					: String(task[key])
-			doc.text(`${key}: ${val}`, 15, y)
-			y += 6
-		}
+			y += 4
+			if (y > 270) {
+				doc.addPage()
+				y = 10
+			}
+		})
 
-		y += 4
-		if (y > 270) {
-			doc.addPage()
-			y = 10
-		}
-	})
-
-	doc.save('todos.pdf')
-	closeDropDown()
+		doc.save('todos.pdf')
+		closeDropDown()
+	} else {
+		notyf.error('Please add task first !')
+		closeDropDown()
+	}
 }
 
 // Show Backup Modal

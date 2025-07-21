@@ -268,33 +268,41 @@ const updateTextareaCount = () => {
     const max = descriptionInput.maxLength;
     descriptionCharCount.textContent = `${count}/${max}`;
 };
+// Function to filter todos by mode name
+const filterTodosByMode = (mode, todos) => {
+    switch (mode) {
+        case 'completed':
+            return todos.filter((todo) => todo.isCompleted);
+        case 'remaining':
+            return todos.filter((todo) => !todo.isCompleted);
+        default:
+            return todos;
+    }
+};
 // Status filter
 const statusFilter = (e) => {
     var _a;
     const target = e.target;
-    const filterMode = (_a = target.textContent) === null || _a === void 0 ? void 0 : _a.trim().toLowerCase();
+    const filterMode = ((_a = target.textContent) === null || _a === void 0 ? void 0 : _a.trim().toLowerCase()) || '';
     const allTodos = storedTodos ? JSON.parse(storedTodos) : [];
-    if (filterMode === 'completed') {
-        const filteredTodos = allTodos.filter((todo) => todo.isCompleted === true);
-        todos = filteredTodos;
-        const taskItems = tasksContainer.querySelectorAll('.task-item');
-        taskItems.forEach((item) => item.remove());
-        showTodos();
-    }
-    else if (filterMode === 'remaining') {
-        const filteredTodos = allTodos.filter((todo) => todo.isCompleted === false);
-        todos = filteredTodos;
-        const taskItems = tasksContainer.querySelectorAll('.task-item');
-        taskItems.forEach((item) => item.remove());
-        showTodos();
-    }
-    else {
-        todos = allTodos;
-        const taskItems = tasksContainer.querySelectorAll('.task-item');
-        taskItems.forEach((item) => item.remove());
-        showTodos();
+    // Filter todos by mode
+    todos = filterTodosByMode(filterMode, allTodos);
+    // Remove old tasks from DOM
+    const taskItems = tasksContainer.querySelectorAll('.task-item');
+    taskItems.forEach((item) => item.remove());
+    // Remove 'primary-color' class from all filter spans
+    const filterIds = ['filter-total', 'filter-completed', 'filter-remaining'];
+    filterIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el)
+            el.classList.remove('primary-color');
+    });
+    // Add 'primary-color' to selected one
+    target.classList.add('primary-color');
+    // Show filtered todos
+    showTodos();
+    if (filterMode === '')
         updateFooterStat();
-    }
 };
 // Reset Stars to one yellow star
 const resetStars = () => {

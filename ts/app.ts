@@ -329,36 +329,44 @@ const updateTextareaCount = () => {
 	descriptionCharCount.textContent = `${count}/${max}`
 }
 
+// Function to filter todos by mode name
+const filterTodosByMode = (mode: string, todos: Task[]): Task[] => {
+	switch (mode) {
+		case 'completed':
+			return todos.filter((todo) => todo.isCompleted)
+		case 'remaining':
+			return todos.filter((todo) => !todo.isCompleted)
+		default:
+			return todos
+	}
+}
+
 // Status filter
 const statusFilter = (e: Event) => {
 	const target = e.target as HTMLSpanElement
-	const filterMode = target.textContent?.trim().toLowerCase()
+	const filterMode = target.textContent?.trim().toLowerCase() || ''
 	const allTodos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
 
-	if (filterMode === 'completed') {
-		const filteredTodos = allTodos.filter((todo) => todo.isCompleted === true)
-		todos = filteredTodos
+	// Filter todos by mode
+	todos = filterTodosByMode(filterMode, allTodos)
 
-		const taskItems = tasksContainer.querySelectorAll('.task-item')
-		taskItems.forEach((item) => item.remove())
-		showTodos()
-	} else if (filterMode === 'remaining') {
-		const filteredTodos = allTodos.filter((todo) => todo.isCompleted === false)
-		todos = filteredTodos
+	// Remove old tasks from DOM
+	const taskItems = tasksContainer.querySelectorAll('.task-item')
+	taskItems.forEach((item) => item.remove())
 
-		const taskItems = tasksContainer.querySelectorAll('.task-item')
-		taskItems.forEach((item) => item.remove())
+	// Remove 'primary-color' class from all filter spans
+	const filterIds = ['filter-total', 'filter-completed', 'filter-remaining']
+	filterIds.forEach((id) => {
+		const el = document.getElementById(id)
+		if (el) el.classList.remove('primary-color')
+	})
 
-		showTodos()
-	} else {
-		todos = allTodos
+	// Add 'primary-color' to selected one
+	target.classList.add('primary-color')
 
-		const taskItems = tasksContainer.querySelectorAll('.task-item')
-		taskItems.forEach((item) => item.remove())
-
-		showTodos()
-		updateFooterStat()
-	}
+	// Show filtered todos
+	showTodos()
+	if (filterMode === '') updateFooterStat()
 }
 
 // Reset Stars to one yellow star

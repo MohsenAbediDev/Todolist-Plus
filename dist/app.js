@@ -324,7 +324,12 @@ const applyFilters = (e) => {
     else if (target === selectCategoryFilter) {
         const selectedCategory = selectCategoryFilter === null || selectCategoryFilter === void 0 ? void 0 : selectCategoryFilter.value;
         if (selectedCategory) {
-            filteredTodos = allTodos.filter((todo) => todo.category === selectedCategory);
+            if (selectedCategory === 'all') {
+                filteredTodos = allTodos;
+            }
+            else {
+                filteredTodos = allTodos.filter((todo) => todo.category === selectedCategory);
+            }
         }
         // Reset other filters
         if (selectDifficultyFilter)

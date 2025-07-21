@@ -396,9 +396,13 @@ const applyFilters = (e: Event) => {
 	else if (target === selectCategoryFilter) {
 		const selectedCategory = selectCategoryFilter?.value
 		if (selectedCategory) {
-			filteredTodos = allTodos.filter(
-				(todo) => todo.category === selectedCategory
-			)
+			if (selectedCategory === 'all') {
+				filteredTodos = allTodos
+			} else {
+				filteredTodos = allTodos.filter(
+					(todo) => todo.category === selectedCategory
+				)
+			}
 		}
 
 		// Reset other filters

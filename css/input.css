@@ -23,6 +23,9 @@
 .bg-primary-hover {
 	background-color: var(--primary-color-hover);
 }
+.primary-color {
+	color: var(--primary-color);
+}
 
 .task-item {
 	transform: translateY(0);

@@ -16,6 +16,9 @@ const exportBtn = document.querySelector('#export-btn');
 const sortDropdown = document.querySelector('#sort-dropdown');
 const sortToggleBtn = document.querySelector('#sort-toggle-btn'); /* prettier-ignore */
 const taskCharCount = document.querySelector('#task-char-count'); /* prettier-ignore */
+const filterTotal = document.querySelector('#filter-total');
+const filterCompleted = document.querySelector('#filter-completed'); /* prettier-ignore */
+const filterRemaining = document.querySelector('#filter-remaining'); /* prettier-ignore */
 const descriptionCharCount = document.querySelector('#description-char-count'); /* prettier-ignore */
 const exportDropdown = document.querySelector('#exportDropdown'); /* prettier-ignore */
 const inputContainer = document.querySelector('#input-container'); /* prettier-ignore */
@@ -265,6 +268,34 @@ const updateTextareaCount = () => {
     const max = descriptionInput.maxLength;
     descriptionCharCount.textContent = `${count}/${max}`;
 };
+// Status filter
+const statusFilter = (e) => {
+    var _a;
+    const target = e.target;
+    const filterMode = (_a = target.textContent) === null || _a === void 0 ? void 0 : _a.trim().toLowerCase();
+    const allTodos = storedTodos ? JSON.parse(storedTodos) : [];
+    if (filterMode === 'completed') {
+        const filteredTodos = allTodos.filter((todo) => todo.isCompleted === true);
+        todos = filteredTodos;
+        const taskItems = tasksContainer.querySelectorAll('.task-item');
+        taskItems.forEach((item) => item.remove());
+        showTodos();
+    }
+    else if (filterMode === 'remaining') {
+        const filteredTodos = allTodos.filter((todo) => todo.isCompleted === false);
+        todos = filteredTodos;
+        const taskItems = tasksContainer.querySelectorAll('.task-item');
+        taskItems.forEach((item) => item.remove());
+        showTodos();
+    }
+    else {
+        todos = allTodos;
+        const taskItems = tasksContainer.querySelectorAll('.task-item');
+        taskItems.forEach((item) => item.remove());
+        showTodos();
+        updateFooterStat();
+    }
+};
 // Reset Stars to one yellow star
 const resetStars = () => {
     difficultyLevels.forEach((btn, i) => {
@@ -367,7 +398,9 @@ addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListe
 closeBoxBtn === null || closeBoxBtn === void 0 ? void 0 : closeBoxBtn.addEventListener('click', closeInputBox);
 exportBtn === null || exportBtn === void 0 ? void 0 : exportBtn.addEventListener('click', openDropDown);
 sortToggleBtn === null || sortToggleBtn === void 0 ? void 0 : sortToggleBtn.addEventListener('click', openSortDropdown);
-taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('keydown', (e) => e.key === 'Enter' ? addTaskHandler() : '');
+filterTotal === null || filterTotal === void 0 ? void 0 : filterTotal.addEventListener('click', (e) => statusFilter(e));
+filterCompleted === null || filterCompleted === void 0 ? void 0 : filterCompleted.addEventListener('click', (e) => statusFilter(e));
+filterRemaining === null || filterRemaining === void 0 ? void 0 : filterRemaining.addEventListener('click', (e) => statusFilter(e));
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('input', updateTaskInputCount);
 descriptionInput === null || descriptionInput === void 0 ? void 0 : descriptionInput.addEventListener('input', updateTextareaCount);
 window.addEventListener('load', () => {

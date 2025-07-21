@@ -17,6 +17,9 @@ const exportBtn = document.querySelector('#export-btn') as HTMLButtonElement
 const sortDropdown = document.querySelector('#sort-dropdown') as HTMLDivElement
 const sortToggleBtn = document.querySelector('#sort-toggle-btn') as HTMLButtonElement /* prettier-ignore */
 const taskCharCount = document.querySelector('#task-char-count') as HTMLSpanElement /* prettier-ignore */
+const filterTotal = document.querySelector('#filter-total') as HTMLSpanElement
+const filterCompleted = document.querySelector('#filter-completed') as HTMLSpanElement /* prettier-ignore */
+const filterRemaining = document.querySelector('#filter-remaining') as HTMLSpanElement /* prettier-ignore */
 const descriptionCharCount = document.querySelector('#description-char-count') as HTMLSpanElement /* prettier-ignore */
 const exportDropdown = document.querySelector('#exportDropdown') as HTMLDivElement /* prettier-ignore */
 const inputContainer = document.querySelector('#input-container') as HTMLDivElement /* prettier-ignore */
@@ -326,6 +329,38 @@ const updateTextareaCount = () => {
 	descriptionCharCount.textContent = `${count}/${max}`
 }
 
+// Status filter
+const statusFilter = (e: Event) => {
+	const target = e.target as HTMLSpanElement
+	const filterMode = target.textContent?.trim().toLowerCase()
+	const allTodos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
+
+	if (filterMode === 'completed') {
+		const filteredTodos = allTodos.filter((todo) => todo.isCompleted === true)
+		todos = filteredTodos
+
+		const taskItems = tasksContainer.querySelectorAll('.task-item')
+		taskItems.forEach((item) => item.remove())
+		showTodos()
+	} else if (filterMode === 'remaining') {
+		const filteredTodos = allTodos.filter((todo) => todo.isCompleted === false)
+		todos = filteredTodos
+
+		const taskItems = tasksContainer.querySelectorAll('.task-item')
+		taskItems.forEach((item) => item.remove())
+
+		showTodos()
+	} else {
+		todos = allTodos
+
+		const taskItems = tasksContainer.querySelectorAll('.task-item')
+		taskItems.forEach((item) => item.remove())
+
+		showTodos()
+		updateFooterStat()
+	}
+}
+
 // Reset Stars to one yellow star
 const resetStars = () => {
 	difficultyLevels.forEach((btn, i) => {
@@ -461,9 +496,11 @@ addTaskBtn?.addEventListener('click', addTaskHandler)
 closeBoxBtn?.addEventListener('click', closeInputBox)
 exportBtn?.addEventListener('click', openDropDown)
 sortToggleBtn?.addEventListener('click', openSortDropdown)
-taskInput?.addEventListener('keydown', (e) =>
-	e.key === 'Enter' ? addTaskHandler() : ''
-)
+
+filterTotal?.addEventListener('click', (e) => statusFilter(e))
+filterCompleted?.addEventListener('click', (e) => statusFilter(e))
+filterRemaining?.addEventListener('click', (e) => statusFilter(e))
+
 taskInput?.addEventListener('input', updateTaskInputCount)
 descriptionInput?.addEventListener('input', updateTextareaCount)
 

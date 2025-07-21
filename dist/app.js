@@ -164,6 +164,7 @@ const todoGenerator = (todo) => {
         : ''}
 		</div>`);
 };
+// Show or Hide element Based on the existence of a task
 const showAnimation = () => {
     tasksContainer.classList.add('fade-in');
     tasksContainer.classList.remove('hidden');
@@ -181,6 +182,11 @@ const showAnimation = () => {
         filterBox.classList.remove('fade-in');
         noTaskMessage.classList.remove('hidden');
     }
+};
+// Show Empty Task Icon
+const ShowEmptyTaskMessage = () => {
+    noTaskMessage.classList.toggle('hidden');
+    noTaskMessage.classList.toggle('show');
 };
 const updateFooterStat = () => {
     const isCompletedCount = todos.filter((todo) => todo.isCompleted === true);
@@ -329,6 +335,9 @@ const applyFilters = (e) => {
     }
     // Apply result
     todos = filteredTodos;
+    if (todos.length === 0) {
+        ShowEmptyTaskMessage();
+    }
     // Clean + render
     const taskItems = tasksContainer.querySelectorAll('.task-item');
     taskItems.forEach((item) => item.remove());

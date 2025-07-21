@@ -201,6 +201,7 @@ const todoGenerator = (todo: Task) => {
 	)
 }
 
+// Show or Hide element Based on the existence of a task
 const showAnimation = () => {
 	tasksContainer.classList.add('fade-in')
 	tasksContainer.classList.remove('hidden')
@@ -222,6 +223,12 @@ const showAnimation = () => {
 
 		noTaskMessage.classList.remove('hidden')
 	}
+}
+
+// Show Empty Task Icon
+const ShowEmptyTaskMessage = () => {
+	noTaskMessage.classList.toggle('hidden')
+	noTaskMessage.classList.toggle('show')
 }
 
 const updateFooterStat = () => {
@@ -394,6 +401,10 @@ const applyFilters = (e: Event) => {
 
 	// Apply result
 	todos = filteredTodos
+
+	if (todos.length === 0) {
+		ShowEmptyTaskMessage()
+	}
 
 	// Clean + render
 	const taskItems = tasksContainer.querySelectorAll('.task-item')

@@ -7,6 +7,8 @@ const addTaskBtn = document.querySelector('#add-task');
 const filterBox = document.querySelector('#filter-box');
 const tasksContainer = document.querySelector('#task-list');
 const category = document.querySelector('#category');
+const selectCategoryFilter = document.querySelector('#category-filter'); /* prettier-ignore */
+const selectDifficultyFilter = document.querySelector('#difficulty-filter'); /* prettier-ignore */
 const footer = document.querySelector('#footer');
 const statTotal = document.querySelector('#stat-total');
 const statCompleted = document.querySelector('#stat-completed');
@@ -279,30 +281,69 @@ const filterTodosByMode = (mode, todos) => {
             return todos;
     }
 };
-// Status filter
-const statusFilter = (e) => {
+const applyFilters = (e) => {
     var _a;
     const target = e.target;
-    const filterMode = ((_a = target.textContent) === null || _a === void 0 ? void 0 : _a.trim().toLowerCase()) || '';
     const allTodos = storedTodos ? JSON.parse(storedTodos) : [];
-    // Filter todos by mode
-    todos = filterTodosByMode(filterMode, allTodos);
-    // Remove old tasks from DOM
+    let filteredTodos = [...allTodos];
+    // 1. Status Filter (span)
+    if (target instanceof HTMLSpanElement) {
+        const filterMode = ((_a = target.textContent) === null || _a === void 0 ? void 0 : _a.trim().toLowerCase()) || '';
+        filteredTodos = filterTodosByMode(filterMode, allTodos);
+        updateStatusUI(target);
+        // Reset other filters
+        if (selectCategoryFilter)
+            selectCategoryFilter.value = '';
+        if (selectDifficultyFilter)
+            selectDifficultyFilter.value = '';
+    }
+    // 2. Category Filter (select)
+    else if (target === selectCategoryFilter) {
+        const selectedCategory = selectCategoryFilter === null || selectCategoryFilter === void 0 ? void 0 : selectCategoryFilter.value;
+        if (selectedCategory) {
+            filteredTodos = allTodos.filter((todo) => todo.category === selectedCategory);
+        }
+        // Reset other filters
+        if (selectDifficultyFilter)
+            selectDifficultyFilter.value = '';
+        const statusSpans = ['filter-total', 'filter-completed', 'filter-remaining'];
+        statusSpans.forEach((id) => {
+            var _a;
+            (_a = document.getElementById(id)) === null || _a === void 0 ? void 0 : _a.classList.remove('primary-color');
+        });
+    }
+    // 3. Difficulty Filter (select)
+    else if (target === selectDifficultyFilter) {
+        const selectedLevel = Number(selectDifficultyFilter.value);
+        if (selectedLevel) {
+            filteredTodos = allTodos.filter((todo) => todo.level === selectedLevel);
+        }
+        // Reset other filters
+        if (selectCategoryFilter)
+            selectCategoryFilter.value = '';
+        const statusSpans = ['filter-total', 'filter-completed', 'filter-remaining'];
+        statusSpans.forEach((id) => {
+            var _a;
+            (_a = document.getElementById(id)) === null || _a === void 0 ? void 0 : _a.classList.remove('primary-color');
+        });
+    }
+    // Apply result
+    todos = filteredTodos;
+    // Clean + render
     const taskItems = tasksContainer.querySelectorAll('.task-item');
     taskItems.forEach((item) => item.remove());
-    // Remove 'primary-color' class from all filter spans
-    const filterIds = ['filter-total', 'filter-completed', 'filter-remaining'];
-    filterIds.forEach((id) => {
+    showTodos();
+    updateFooterStat();
+};
+// Update Selected status Color text
+const updateStatusUI = (selected) => {
+    const ids = ['filter-total', 'filter-completed', 'filter-remaining'];
+    ids.forEach((id) => {
         const el = document.getElementById(id);
         if (el)
             el.classList.remove('primary-color');
     });
-    // Add 'primary-color' to selected one
-    target.classList.add('primary-color');
-    // Show filtered todos
-    showTodos();
-    if (filterMode === '')
-        updateFooterStat();
+    selected.classList.add('primary-color');
 };
 // Reset Stars to one yellow star
 const resetStars = () => {
@@ -406,9 +447,11 @@ addTaskBtn === null || addTaskBtn === void 0 ? void 0 : addTaskBtn.addEventListe
 closeBoxBtn === null || closeBoxBtn === void 0 ? void 0 : closeBoxBtn.addEventListener('click', closeInputBox);
 exportBtn === null || exportBtn === void 0 ? void 0 : exportBtn.addEventListener('click', openDropDown);
 sortToggleBtn === null || sortToggleBtn === void 0 ? void 0 : sortToggleBtn.addEventListener('click', openSortDropdown);
-filterTotal === null || filterTotal === void 0 ? void 0 : filterTotal.addEventListener('click', (e) => statusFilter(e));
-filterCompleted === null || filterCompleted === void 0 ? void 0 : filterCompleted.addEventListener('click', (e) => statusFilter(e));
-filterRemaining === null || filterRemaining === void 0 ? void 0 : filterRemaining.addEventListener('click', (e) => statusFilter(e));
+filterTotal === null || filterTotal === void 0 ? void 0 : filterTotal.addEventListener('click', (e) => applyFilters(e));
+filterCompleted === null || filterCompleted === void 0 ? void 0 : filterCompleted.addEventListener('click', (e) => applyFilters(e));
+filterRemaining === null || filterRemaining === void 0 ? void 0 : filterRemaining.addEventListener('click', (e) => applyFilters(e));
+selectCategoryFilter === null || selectCategoryFilter === void 0 ? void 0 : selectCategoryFilter.addEventListener('change', (e) => applyFilters(e));
+selectDifficultyFilter === null || selectDifficultyFilter === void 0 ? void 0 : selectDifficultyFilter.addEventListener('change', (e) => applyFilters(e));
 taskInput === null || taskInput === void 0 ? void 0 : taskInput.addEventListener('input', updateTaskInputCount);
 descriptionInput === null || descriptionInput === void 0 ? void 0 : descriptionInput.addEventListener('input', updateTextareaCount);
 window.addEventListener('load', () => {

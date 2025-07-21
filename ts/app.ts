@@ -18,6 +18,7 @@ const closeBoxBtn = document.querySelector('#close-box') as HTMLButtonElement
 const exportBtn = document.querySelector('#export-btn') as HTMLButtonElement
 const sortDropdown = document.querySelector('#sort-dropdown') as HTMLDivElement
 const sortToggleBtn = document.querySelector('#sort-toggle-btn') as HTMLButtonElement /* prettier-ignore */
+const sortButtons = document.querySelectorAll<HTMLButtonElement>('#sort-dropdown [data-sort]') /* prettier-ignore */
 const taskCharCount = document.querySelector('#task-char-count') as HTMLSpanElement /* prettier-ignore */
 const filterTotal = document.querySelector('#filter-total') as HTMLSpanElement
 const filterCompleted = document.querySelector('#filter-completed') as HTMLSpanElement /* prettier-ignore */
@@ -39,6 +40,7 @@ export interface Task {
 	category: string
 	level: number
 	timer: { elapsedTime: number; isRunning: boolean }
+	createdAt: string
 	isCompleted: boolean
 }
 declare var Notyf: any
@@ -52,6 +54,7 @@ export const notyf = new Notyf({
 
 const storedTodos = localStorage.getItem('todos')
 export let todos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
+let currentSortMode: string = ''
 
 // Generate unique id fot tasks
 function generateUniqueNumericId(todos: { id: number }[]): number {
@@ -81,13 +84,14 @@ const addTaskHandler = () => {
 	}
 
 	if (value) {
-		const newTodo = {
+		const newTodo: Task = {
 			id: generateUniqueNumericId(todos),
 			title: value,
 			description: descriptionInput.value,
 			category: category.value,
 			level: levelsSelected.length,
 			timer: { elapsedTime: 0, isRunning: false },
+			createdAt: new Date().toISOString(),
 			isCompleted: false,
 		}
 		todos.push(newTodo)
@@ -303,7 +307,6 @@ const openSortDropdown = () => {
 
 	if (isCurrentlyHidden) {
 		sortDropdown.classList.remove('hidden')
-		sortDropdown.classList.add('show')
 
 		document.addEventListener('click', handleOutsideSortClick)
 	} else {
@@ -313,7 +316,6 @@ const openSortDropdown = () => {
 // Close Sort DropDown Handler
 export const closeSortDropDown = () => {
 	sortDropdown.classList.add('hidden')
-	sortDropdown.classList.remove('show')
 
 	document.removeEventListener('click', handleOutsideSortClick)
 }
@@ -350,10 +352,33 @@ const filterTodosByMode = (mode: string, todos: Task[]): Task[] => {
 	}
 }
 
+// Function to sort todos by sort mode
+const sortTodos = (todos: Task[]): Task[] => {
+	switch (currentSortMode) {
+		case 'difficulty-asc':
+			return [...todos].sort((a, b) => a.level - b.level)
+		case 'difficulty-desc':
+			return [...todos].sort((a, b) => b.level - a.level)
+		case 'date-asc':
+			return [...todos].sort(
+				(a, b) =>
+					new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+			)
+		case 'date-desc':
+			return [...todos].sort(
+				(a, b) =>
+					new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+			)
+		default:
+			return todos
+	}
+}
+
+// Apply Filters and Sort to todos
 const applyFilters = (e: Event) => {
 	const target = e.target
 
-	const allTodos: Task[] = storedTodos ? JSON.parse(storedTodos) : []
+	const allTodos: Task[] = JSON.parse(localStorage.getItem('todos') || '[]')
 	let filteredTodos: Task[] = [...allTodos]
 
 	// 1. Status Filter (span)
@@ -400,7 +425,7 @@ const applyFilters = (e: Event) => {
 	}
 
 	// Apply result
-	todos = filteredTodos
+	todos = sortTodos(filteredTodos)
 
 	if (todos.length === 0) {
 		ShowEmptyTaskMessage()
@@ -413,6 +438,23 @@ const applyFilters = (e: Event) => {
 	showTodos()
 	updateFooterStat()
 }
+
+// Select Sort Mode
+sortButtons.forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		const clickedBtn = e.currentTarget as HTMLButtonElement
+		const sortMode = (e.currentTarget as HTMLElement).dataset.sort
+
+		if (sortMode) {
+			currentSortMode = sortMode
+
+			sortToggleBtn.innerHTML = clickedBtn.innerHTML
+
+			applyFilters(e)
+			closeSortDropDown()
+		}
+	})
+})
 
 // Update Selected status Color text
 const updateStatusUI = (selected: HTMLSpanElement) => {

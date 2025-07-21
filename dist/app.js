@@ -17,6 +17,7 @@ const closeBoxBtn = document.querySelector('#close-box');
 const exportBtn = document.querySelector('#export-btn');
 const sortDropdown = document.querySelector('#sort-dropdown');
 const sortToggleBtn = document.querySelector('#sort-toggle-btn'); /* prettier-ignore */
+const sortButtons = document.querySelectorAll('#sort-dropdown [data-sort]'); /* prettier-ignore */
 const taskCharCount = document.querySelector('#task-char-count'); /* prettier-ignore */
 const filterTotal = document.querySelector('#filter-total');
 const filterCompleted = document.querySelector('#filter-completed'); /* prettier-ignore */
@@ -38,6 +39,7 @@ export const notyf = new Notyf({
 });
 const storedTodos = localStorage.getItem('todos');
 export let todos = storedTodos ? JSON.parse(storedTodos) : [];
+let currentSortMode = '';
 // Generate unique id fot tasks
 function generateUniqueNumericId(todos) {
     const existingIds = new Set(todos.map((t) => t.id));
@@ -64,6 +66,7 @@ const addTaskHandler = () => {
             category: category.value,
             level: levelsSelected.length,
             timer: { elapsedTime: 0, isRunning: false },
+            createdAt: new Date().toISOString(),
             isCompleted: false,
         };
         todos.push(newTodo);
@@ -245,7 +248,6 @@ const openSortDropdown = () => {
     const isCurrentlyHidden = sortDropdown.classList.contains('hidden');
     if (isCurrentlyHidden) {
         sortDropdown.classList.remove('hidden');
-        sortDropdown.classList.add('show');
         document.addEventListener('click', handleOutsideSortClick);
     }
     else {
@@ -255,7 +257,6 @@ const openSortDropdown = () => {
 // Close Sort DropDown Handler
 export const closeSortDropDown = () => {
     sortDropdown.classList.add('hidden');
-    sortDropdown.classList.remove('show');
     document.removeEventListener('click', handleOutsideSortClick);
 };
 const handleOutsideSortClick = (event) => {
@@ -287,10 +288,26 @@ const filterTodosByMode = (mode, todos) => {
             return todos;
     }
 };
+// Function to sort todos by sort mode
+const sortTodos = (todos) => {
+    switch (currentSortMode) {
+        case 'difficulty-asc':
+            return [...todos].sort((a, b) => a.level - b.level);
+        case 'difficulty-desc':
+            return [...todos].sort((a, b) => b.level - a.level);
+        case 'date-asc':
+            return [...todos].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        case 'date-desc':
+            return [...todos].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        default:
+            return todos;
+    }
+};
+// Apply Filters and Sort to todos
 const applyFilters = (e) => {
     var _a;
     const target = e.target;
-    const allTodos = storedTodos ? JSON.parse(storedTodos) : [];
+    const allTodos = JSON.parse(localStorage.getItem('todos') || '[]');
     let filteredTodos = [...allTodos];
     // 1. Status Filter (span)
     if (target instanceof HTMLSpanElement) {
@@ -334,7 +351,7 @@ const applyFilters = (e) => {
         });
     }
     // Apply result
-    todos = filteredTodos;
+    todos = sortTodos(filteredTodos);
     if (todos.length === 0) {
         ShowEmptyTaskMessage();
     }
@@ -344,6 +361,19 @@ const applyFilters = (e) => {
     showTodos();
     updateFooterStat();
 };
+// Select Sort Mode
+sortButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        const clickedBtn = e.currentTarget;
+        const sortMode = e.currentTarget.dataset.sort;
+        if (sortMode) {
+            currentSortMode = sortMode;
+            sortToggleBtn.innerHTML = clickedBtn.innerHTML;
+            applyFilters(e);
+            closeSortDropDown();
+        }
+    });
+});
 // Update Selected status Color text
 const updateStatusUI = (selected) => {
     const ids = ['filter-total', 'filter-completed', 'filter-remaining'];

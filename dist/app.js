@@ -116,7 +116,7 @@ const todoGenerator = (todo) => {
 
 				<div class="flex flex-1 flex-col gap-y-1">
 					<span class="${`${isCompletedClass} cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500`.trim()}"
-							onclick="editTask(event, ${todo.id})">
+							onclick="editTask(event, ${todo.id}, 'title')">
 							${todo.title}
 					</span>
 
@@ -161,7 +161,7 @@ const todoGenerator = (todo) => {
 
 						<div id="desc-${todo.id}" class="flex items-center gap-1 mt-3 h-0 transition-all duration-300 overflow-hidden">
 							<span class="text-sm text-gray-700 dark:text-gray-300">Description:</span>  
-							<p class="text-sm text-gray-500 dark:text-gray-100">${todo.description}</p>
+							<p onclick="editTask(event, ${todo.id}, 'description')" class="text-sm text-gray-500 dark:text-gray-100">${todo.description}</p>
 						</div>
 					</div>`
         : ''}
@@ -414,43 +414,45 @@ difficultyLevels.forEach((level, index) => {
         });
     });
 });
-window.editTask = function (event, taskId) {
-    const span = event.target;
-    const currentTitle = span.textContent;
+window.editTask = function (event, taskId, field) {
+    var _a;
+    const element = event.target;
+    const currentValue = (_a = element.textContent) !== null && _a !== void 0 ? _a : '';
     const input = document.createElement('input');
     input.type = 'text';
-    input.value = (currentTitle !== null && currentTitle !== void 0 ? currentTitle : '').trim();
+    input.value = currentValue.trim();
     input.className =
         'flex-1 w-full px-2 py-1 pr-14 rounded-lg border-1 dark:border-gray-500 bg-gray-50 dark:bg-gray-600 dark:text-gray-300 dark:placeholder-gray-400 border-gray-200 text-gray-800 placeholder-gray-500 input-focus';
-    input.addEventListener('blur', () => window.saveEditedTitle(input, taskId));
+    input.addEventListener('blur', () => window.saveEditedField(input, taskId, field));
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-            input.blur(); // Trigger blur to save
+            input.blur();
         }
     });
-    span.replaceWith(input);
+    element.replaceWith(input);
     input.focus();
 };
-window.saveEditedTitle = function (input, taskId) {
-    const newTitle = input.value.trim();
-    if (newTitle.length === 0) {
-        notyf.error('Title cannot be empty !');
+window.saveEditedField = function (input, taskId, field) {
+    const newValue = input.value.trim();
+    if (newValue.length === 0) {
+        notyf.error(`${field === 'title' ? 'Title' : 'Description'} cannot be empty!`);
         input.focus();
         return;
     }
-    const newTodo = todos.find((t) => t.id === taskId);
-    if (newTodo) {
-        newTodo.title = newTitle;
-        // Save to localStorage
+    const todo = todos.find((t) => t.id === taskId);
+    if (todo) {
+        todo[field] = newValue;
         localStorage.setItem('todos', JSON.stringify(todos));
     }
-    // Replace input with new span
-    const span = document.createElement('span');
-    span.textContent = newTitle;
-    span.className =
-        'cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500';
-    span.onclick = (e) => window.editTask(e, taskId);
-    input.replaceWith(span);
+    // ساختن عنصر جدید بر اساس نوع فیلد
+    const el = document.createElement(field === 'title' ? 'span' : 'p');
+    el.textContent = newValue;
+    el.className =
+        field === 'title'
+            ? 'cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500'
+            : 'text-sm text-gray-500 dark:text-gray-100 cursor-pointer';
+    el.onclick = (e) => window.editTask(e, taskId, field);
+    input.replaceWith(el);
 };
 window.removeTask = function (id) {
     const filteredTodos = todos.filter((task) => task.id !== id);

@@ -148,7 +148,7 @@ const todoGenerator = (todo: Task) => {
 
 				<div class="flex flex-1 flex-col gap-y-1">
 					<span class="${`${isCompletedClass} cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500`.trim()}"
-							onclick="editTask(event, ${todo.id})">
+							onclick="editTask(event, ${todo.id}, 'title')">
 							${todo.title}
 					</span>
 
@@ -196,7 +196,7 @@ const todoGenerator = (todo: Task) => {
 
 						<div id="desc-${todo.id}" class="flex items-center gap-1 mt-3 h-0 transition-all duration-300 overflow-hidden">
 							<span class="text-sm text-gray-700 dark:text-gray-300">Description:</span>  
-							<p class="text-sm text-gray-500 dark:text-gray-100">${todo.description}</p>
+							<p onclick="editTask(event, ${todo.id}, 'description')" class="text-sm text-gray-500 dark:text-gray-100">${todo.description}</p>
 						</div>
 					</div>`
 					: ''
@@ -498,56 +498,65 @@ difficultyLevels.forEach((level, index) => {
 })
 
 // Edit Task Handler
-;(window as any).editTask = function (event: Event, taskId: number) {
-	const span = event.target as HTMLSpanElement
-	const currentTitle = span.textContent
+;(window as any).editTask = function (
+	event: Event,
+	taskId: number,
+	field: 'title' | 'description'
+) {
+	const element = event.target as HTMLElement
+	const currentValue = element.textContent ?? ''
 
 	const input = document.createElement('input') as HTMLInputElement
 	input.type = 'text'
-	input.value = (currentTitle ?? '').trim()
+	input.value = currentValue.trim()
 	input.className =
 		'flex-1 w-full px-2 py-1 pr-14 rounded-lg border-1 dark:border-gray-500 bg-gray-50 dark:bg-gray-600 dark:text-gray-300 dark:placeholder-gray-400 border-gray-200 text-gray-800 placeholder-gray-500 input-focus'
+
 	input.addEventListener('blur', () =>
-		(window as any).saveEditedTitle(input, taskId)
+		(window as any).saveEditedField(input, taskId, field)
 	)
 
 	input.addEventListener('keydown', (e) => {
 		if (e.key === 'Enter') {
-			input.blur() // Trigger blur to save
+			input.blur()
 		}
 	})
 
-	span.replaceWith(input)
+	element.replaceWith(input)
 	input.focus()
 }
-;(window as any).saveEditedTitle = function (
+;(window as any).saveEditedField = function (
 	input: HTMLInputElement,
-	taskId: number
+	taskId: number,
+	field: 'title' | 'description'
 ) {
-	const newTitle = input.value.trim()
+	const newValue = input.value.trim()
 
-	if (newTitle.length === 0) {
-		notyf.error('Title cannot be empty !')
+	if (newValue.length === 0) {
+		notyf.error(
+			`${field === 'title' ? 'Title' : 'Description'} cannot be empty!`
+		)
 		input.focus()
 		return
 	}
 
-	const newTodo = todos.find((t) => t.id === taskId)
-	if (newTodo) {
-		newTodo.title = newTitle
-
-		// Save to localStorage
+	const todo = todos.find((t) => t.id === taskId)
+	if (todo) {
+		todo[field] = newValue
 		localStorage.setItem('todos', JSON.stringify(todos))
 	}
 
-	// Replace input with new span
-	const span = document.createElement('span')
-	span.textContent = newTitle
-	span.className =
-		'cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500'
-	span.onclick = (e) => (window as any).editTask(e, taskId)
+	// ساختن عنصر جدید بر اساس نوع فیلد
+	const el = document.createElement(field === 'title' ? 'span' : 'p')
+	el.textContent = newValue
+	el.className =
+		field === 'title'
+			? 'cursor-pointer transition-all duration-300 text-gray-800 dark:text-gray-200 hover:text-blue-500'
+			: 'text-sm text-gray-500 dark:text-gray-100 cursor-pointer'
 
-	input.replaceWith(span)
+	el.onclick = (e) => (window as any).editTask(e, taskId, field)
+
+	input.replaceWith(el)
 }
 
 // Remove Task Handler
